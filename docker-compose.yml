@@ -1,18 +1,19 @@
+
+
 services:
-  mysql:
+  db:
     image: mysql:latest
     container_name: mysql-container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: monpassword
       MYSQL_DATABASE: matchmakingDB
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: monpassword
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -23,6 +24,39 @@ services:
       MYSQL_ROOT_PASSWORD: monpassword
     ports:
       - "8080:80"
+
+
+  web:
+    image: advanced-matchmaking
+    container_name: django_app
+    restart: always
+    environment:
+      - DB_NAME=matchmakingDB
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_HOST=localhost
+      - DB_PORT=3306
+    ports:
+      - "8000:8000"
+
+    
+
+  # web:
+  #   build: .
+  #   container_name: django_app
+  #   command: python matchmakingProject/manage.py runserver 127.0.0.1:8000
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     - DB_NAME=matchmakingDB
+  #     - DB_USER=user
+  #     - DB_PASSWORD=password
+  #     - DB_HOST=db
+  #     - DB_PORT=3306
 
 volumes:
   mysql_data:
