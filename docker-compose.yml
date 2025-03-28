@@ -47,6 +47,7 @@ services:
 
 
   web:
+    #build: .
     image: advanced-matchmaking
     container_name: django_app
     restart: always
