@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r matchmakingProject/requirements.txt
 EXPOSE 8000
 
 # Commande de lancement du serveur Django
-CMD ["python", "matchmakingProject/manage.py", "runserver", "127.0.0.1:8000"]
+CMD ["python", "matchmakingProject/manage.py", "runserver", "0.0.0.0:8000"]
