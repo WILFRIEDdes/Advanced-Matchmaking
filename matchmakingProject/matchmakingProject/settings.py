@@ -124,6 +124,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+LOGIN_REDIRECT_URL = "/"  # Change selon ton besoin
+LOGOUT_REDIRECT_URL = "/login/"  # Redirige après la déconnexion
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
