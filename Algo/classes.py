@@ -1,5 +1,5 @@
 class Competence:
-    def __init__(self, id, nom, niveau):
+    def __init__(self, id, nom, niveau=-1):
         self.id = id # Id dans la base de données
         self.nom = nom
         self.niveau = niveau # Niveau de compétence de 1 à 5
@@ -32,7 +32,7 @@ class Projet:
         self.mobilite = mobilite  # Peut être présentiel, distanciel ou hybride
 
 class Equipe:
-    def __init__(self, projet, membres, heures_totales, competences_necessaires, competences_bonus, mobilite, score_global):
+    def __init__(self, projet, membres, heures_totales, competences_necessaires, competences_bonus, mobilite, score_global=-1):
         self.projet = projet # Objet Projet
         self.membres = membres  # Liste d'objets Utilisateur
         self.taille = len(membres)  # Nombre de membres
