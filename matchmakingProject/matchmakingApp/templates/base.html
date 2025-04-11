@@ -12,9 +12,17 @@
     <nav class="bg-blue-600 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <a href="{% url 'index' %}" class="text-white text-xl font-bold">Mon Site</a>
-            <div>
-                <a href="{% url 'login' %}" class="text-white px-4">Connexion</a>
-                <a href="#" class="text-white px-4">Inscription</a>
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="text-white">Bienvenue, {{ user.prenom }} {{ user.nom }}!</span>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="text-white hover:underline">Déconnexion</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-white hover:underline">Connexion</a>
+                    <a href="#" class="text-white hover:underline">Inscription</a>
+                {% endif %}
             </div>
         </div>
     </nav>

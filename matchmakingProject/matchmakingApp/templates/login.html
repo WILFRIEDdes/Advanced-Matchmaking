@@ -8,17 +8,13 @@
     
     <form method="post" class="mt-4">
         {% csrf_token %}
-        <div class="mb-4">
-            <label class="block text-gray-700">Nom d'utilisateur</label>
-            {{ form.username }}
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Mot de passe</label>
-            {{ form.password }}
-        </div>
-        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded">
+        {{ form.as_p }}
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 my-4 rounded">
             Se connecter
         </button>
+        {% if error %}
+          <p style="color:red">{{ error }}</p>
+        {% endif %}
     </form>
 </div>
 {% endblock %}
