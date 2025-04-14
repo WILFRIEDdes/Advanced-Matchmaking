@@ -43,7 +43,7 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
     salaire_horaire = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     moyenne_notes = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
     historique_notes = models.JSONField(blank=True, null=True)
-    mobilite = models.CharField(max_length=20, choices=[('présentiel', 'Présentiel'), ('distanciel', 'Distanciel')], blank=True, null=True)
+    mobilite = models.CharField(max_length=20, choices=[('présentiel', 'Présentiel'), ('distanciel', 'Distanciel'), ('mixte', 'Mixte')], blank=True, null=True)
     score_projet = models.IntegerField(blank=True, null=True)
 
     is_active = models.BooleanField(default=True)
@@ -61,6 +61,9 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
 
 class Competence(models.Model):
     nom = models.CharField(unique=True, max_length=100)
+
+    def __str__(self):
+        return self.nom
 
     class Meta:
         managed = True
@@ -81,7 +84,7 @@ class Equipe(models.Model):
 
 class Disponibilite(models.Model):
     id = models.AutoField(primary_key=True)
-    utilisateur = models.OneToOneField('Utilisateur', on_delete=models.CASCADE)
+    utilisateur = models.ForeignKey('Utilisateur', on_delete=models.CASCADE)
     jour = models.CharField(max_length=8)
     heure_debut = models.TimeField(blank=True, null=True)
     heure_fin = models.TimeField(blank=True, null=True)
@@ -89,7 +92,7 @@ class Disponibilite(models.Model):
     class Meta:
         managed = True
         db_table = 'Disponibilite'
-        unique_together = (('utilisateur', 'jour'),)
+        unique_together = ('utilisateur', 'jour', 'heure_debut', 'heure_fin')
 
 
 class PreferenceUtilisateur(models.Model):
@@ -118,7 +121,7 @@ class PreferenceCompetence(models.Model):
 
 class UtilisateurCompetence(models.Model):
     id = models.AutoField(primary_key=True)
-    utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE)
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
     competence = models.ForeignKey(Competence, on_delete=models.CASCADE)
     niveau = models.CharField(max_length=13, blank=True, null=True)
 
