@@ -97,6 +97,8 @@ def list_projects(request):
     return render(request, 'list_projects.html', {'projets': projets})
 
 
+@login_required
+@role_required(['manager'])
 def create_project(request):
     if request.method == 'POST':
         form = ProjetForm(request.POST)
@@ -127,3 +129,15 @@ def create_project(request):
 
     competences = Competence.objects.all()
     return render(request, 'create_project.html', {'form': form, 'competences': competences})
+
+
+@login_required
+def calendar(request):
+    # code ici
+    return render(request, 'calendar.html')
+
+
+@login_required
+def profile(request):
+    # code ici
+    return render(request, 'profile.html')
