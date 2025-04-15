@@ -1,5 +1,5 @@
 from django import forms
-from .models import Utilisateur, Competence
+from .models import Projet, Competence
 
 class LoginForm(forms.Form):
     email = forms.EmailField(label='Adresse mail', widget=forms.TextInput(attrs={"class": "w-full py-2 px-3 text-lg border rounded"}))
@@ -64,3 +64,17 @@ class FirstLoginForm(forms.Form):
         confirm = cleaned_data.get("confirm_password")
         if password and confirm and password != confirm:
             self.add_error('confirm_password', "Les mots de passe ne correspondent pas.")
+
+            
+class ProjetForm(forms.ModelForm):
+    class Meta:
+        model = Projet
+        fields = ['nom', 'description', 'date_debut', 'date_fin']
+        widgets = {
+            'date_debut': forms.DateInput(attrs={'type': 'date'}),
+            'date_fin': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+class CompetenceRequiseForm(forms.Form):
+    competence = forms.ModelChoiceField(queryset=Competence.objects.all(), label='Compétence')
+    niveau_requis = forms.CharField(max_length=13, label='Niveau requis')

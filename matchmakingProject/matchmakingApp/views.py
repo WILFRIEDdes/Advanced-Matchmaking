@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, FirstLoginForm
-from .models import UtilisateurCompetence, Disponibilite, Utilisateur
+from .forms import LoginForm, FirstLoginForm, ProjetForm, CompetenceRequiseForm
+from .models import UtilisateurCompetence, Disponibilite, Utilisateur, Projet, ProjetCompetenceRequise, Competence
 from .utils.decorators import role_required
+import json
+from django.core.serializers import serialize
 
 # Create your views here.
 
@@ -76,20 +78,52 @@ def unauthorized(request):
 
 @login_required
 @role_required(['manager'])
-def generation_equipe(request):
+def team_generation(request):
     # code ici
-    return render(request, 'generation_equipe.html')
+    return render(request, 'team_generation.html')
 
 
 @login_required
 @role_required(['manager'])
-def liste_employes(request):
+def list_employees(request):
     employes = Utilisateur.objects.filter(role='employe')
-    return render(request, 'liste_employes.html', {'employes': employes})
+    return render(request, 'list_employees.html', {'employes': employes})
 
 
 @login_required
 @role_required(['manager'])
-def liste_projets(request):
-    # code ici
-    return render(request, 'liste_projets.html')
+def list_projects(request):
+    projets = Projet.objects.select_related('equipe').all()
+    return render(request, 'list_projects.html', {'projets': projets})
+
+
+def create_project(request):
+    if request.method == 'POST':
+        form = ProjetForm(request.POST)
+        if form.is_valid():
+            projet = form.save()
+
+            total = int(request.POST.get('total_competences', 0))
+            for i in range(1, total + 1):
+                comp_id = request.POST.get(f'competence_{i}')
+                niveau = request.POST.get(f'niveau_{i}')
+                if comp_id and niveau:
+                    ProjetCompetenceRequise.objects.create(
+                        projet=projet,
+                        competence_id=comp_id,
+                        niveau_requis=niveau
+                    )
+            return redirect('list_projects')
+    else:
+        form = ProjetForm()
+        competences = Competence.objects.all()
+        competences_json = json.dumps([
+            {'id': c.id, 'nom': c.nom} for c in competences
+        ])
+        return render(request, 'create_project.html', {
+            'form': form,
+            'competences_json': competences_json
+        })
+
+    competences = Competence.objects.all()
+    return render(request, 'create_project.html', {'form': form, 'competences': competences})

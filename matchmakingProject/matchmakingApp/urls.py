@@ -7,7 +7,8 @@ urlpatterns = [
     path("login/", views.login_view, name="login"),
     path("first_login/", views.first_login, name="first_login"),
     path('unauthorized/', views.unauthorized, name='unauthorized'),
-    path('generation_equipe/', views.generation_equipe, name='generation_equipe'),
-    path('liste_employes/', views.liste_employes, name='liste_employes'),
-    path('liste_projets/', views.liste_projets, name='liste_projets'),
+    path('team_generation/', views.team_generation, name='team_generation'),
+    path('list_employees/', views.list_employees, name='list_employees'),
+    path('list_projects/', views.list_projects, name='list_projects'),
+    path('create_project/', views.create_project, name='create_project'),
 ]

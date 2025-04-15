@@ -70,6 +70,32 @@ class Competence(models.Model):
         db_table = 'Competence'
 
 
+class Projet(models.Model):
+    nom = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    date_debut = models.DateField()
+    date_fin = models.DateField()
+    equipe = models.OneToOneField('Equipe', on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.nom
+
+    class Meta:
+        managed = True
+        db_table = 'Projet'
+
+
+class ProjetCompetenceRequise(models.Model):
+    projet = models.ForeignKey('Projet', on_delete=models.CASCADE)
+    competence = models.ForeignKey('Competence', on_delete=models.CASCADE)
+    niveau_requis = models.CharField(max_length=13, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Projet_CompetenceRequise'
+        unique_together = (('projet', 'competence'),)
+
+
 class Equipe(models.Model):
     id = models.AutoField(primary_key=True)
     taille = models.IntegerField(blank=True, null=True)
