@@ -4,6 +4,10 @@ from score_utilisateur import *
 from formation_equipes import *
 from optimisation_meilleure_equipe import *
 from coefficients import obtenir_coefficients
+from feedback_manager import enregistrer_feedback
+from ia_ajustement import ajuster_coefficients, sauver_coefficients
+from collecte_feedbacks import traiter_feedbacks_utilisateurs
+import random
 
 
 
@@ -104,3 +108,41 @@ for equipe_initiale in equipes_initiales:
 meilleure_equipe = algorithme_genetique(equipes_initiales[0], utilisateurs, projet_demo)
 print("-------------- Meilleure équipe optimisée --------------")
 print(f"Équipe : {[membre.id for membre in meilleure_equipe.membres]}, Budget total: {meilleure_equipe.budget_total} €, Score: {meilleure_equipe.score_global}")
+
+
+
+
+# -------------- Simulation de feedbacks utilisateurs --------------
+
+# q1 : Le projet s’est-il bien déroulé selon vous ? (1 à 5)
+
+# q2 : Avez-vous trouvé l’équipe compétente techniquement ? (1 à 5)
+
+# q3 : La communication au sein de l’équipe était-elle fluide ? (1 à 5)
+
+# q4 : Le projet a-t-il respecté les délais ? (1 à 5)
+
+# q5 : Vous êtes-vous senti à l’aise dans votre rôle ? (1 à 5)
+
+
+# Simuler des feedbacks utilisateurs de manière aléatoire
+feedbacks_simules = []
+for _ in range(20):
+    utilisateur_id = random.randint(1, 15)
+    reponses = {f"q{i}": random.randint(1, 5) for i in range(1, 6)}
+    poids = round(random.uniform(1.0, 2.0), 1)
+    feedbacks_simules.append({"utilisateur_id": utilisateur_id, "reponses": reponses, "poids": poids})
+
+
+# Traitement + mise à jour des coefficients
+
+print("\n>> ✅ Coefficients initiaux :", obtenir_coefficients())
+nouveaux_coeffs = traiter_feedbacks_utilisateurs(projet_demo.id, feedbacks_simules)
+
+
+if nouveaux_coeffs:
+    print("\n>> ✅ Coefficients ajustés par l'IA :", nouveaux_coeffs)
+    sauver_coefficients(nouveaux_coeffs)
+else:
+    print("\n>> ⚠️ Pas d’ajustement (données insuffisantes ou modèle non concluant)")
+    sauver_coefficients(obtenir_coefficients())
