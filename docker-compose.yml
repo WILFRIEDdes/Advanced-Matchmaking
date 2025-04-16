@@ -1,27 +1,63 @@
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16
+
 services:
-  mysql:
+  db:
     image: mysql:latest
     container_name: mysql-container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: monpassword
       MYSQL_DATABASE: matchmakingDB
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: monpassword
     ports:
       - "3306:3306"
+    expose:
+        - '3306'
+    networks :
+      default:
+        ipv4_address: 172.19.0.2
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     restart: always
+    networks :
+      - default
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: db
+      PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: monpassword
     ports:
       - "8080:80"
+    depends_on:
+      - db
+
+
+  # web:
+  #   #build: .
+  #   image: advanced-matchmaking
+  #   container_name: django_app
+  #   restart: always
+  #   networks :
+  #     - default
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
 
 volumes:
   mysql_data:
