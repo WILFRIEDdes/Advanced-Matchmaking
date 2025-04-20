@@ -21,7 +21,7 @@
                         <a href="{% url 'create_project' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Créer un projet</a>
                         <a href="{% url 'calendar' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Calendrier</a>
                         <a href="{% url 'profile' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mon Profil</a>
-                    {% elif user.role == 'employee' %}
+                    {% elif user.role == 'employe' %}
                         <a href="{% url 'list_projects' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mes Projets</a>
                         <a href="{% url 'calendar' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Calendrier</a>
                         <a href="{% url 'profile' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mon Profil</a>
