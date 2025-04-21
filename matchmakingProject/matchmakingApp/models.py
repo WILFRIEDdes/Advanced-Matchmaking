@@ -146,10 +146,18 @@ class PreferenceCompetence(models.Model):
 
 
 class UtilisateurCompetence(models.Model):
+    niveaux = [
+        ('Débutant', 'Débutant'),
+        ('Novice', 'Novice'),
+        ('Intermédiaire', 'Intermédiaire'),
+        ('Avancé', 'Avancé'),
+        ('Expert', 'Expert'),
+    ]
+
     id = models.AutoField(primary_key=True)
     utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
     competence = models.ForeignKey(Competence, on_delete=models.CASCADE)
-    niveau = models.CharField(max_length=13, blank=True, null=True)
+    niveau = models.CharField(max_length=50, choices=niveaux, blank=True, null=True)
 
     class Meta:
         managed = True

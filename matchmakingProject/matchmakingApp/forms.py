@@ -1,5 +1,6 @@
 from django import forms
-from .models import Projet, Competence
+from .models import Projet, Competence, Utilisateur, UtilisateurCompetence, Disponibilite
+from django.forms import modelformset_factory
 
 class LoginForm(forms.Form):
     email = forms.EmailField(label='Adresse mail', widget=forms.TextInput(attrs={"class": "w-full py-2 px-3 text-lg border rounded"}))
@@ -65,7 +66,70 @@ class FirstLoginForm(forms.Form):
         if password and confirm and password != confirm:
             self.add_error('confirm_password', "Les mots de passe ne correspondent pas.")
 
-            
+
+class ProfilForm(forms.ModelForm):
+    mobilite = forms.ChoiceField(
+        label="Mobilité",
+        choices=[
+            ('présentiel', 'Présentiel'),
+            ('distanciel', 'Distanciel'),
+            ('mixte', 'Mixte')
+        ],
+        widget=forms.Select(attrs={
+            "class": "w-full p-2 border rounded-lg cursor-pointer"
+        })
+    )
+
+    competences = forms.ModelMultipleChoiceField(
+        label="Compétences",
+        queryset=Competence.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={
+            "class": "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2"
+        }),
+        required=False
+    )
+
+    class Meta:
+        model = Utilisateur
+        fields = ['mobilite']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.get('instance')
+        super().__init__(*args, **kwargs)
+
+        if user:
+            self.fields['competences'].initial = Competence.objects.filter(
+                utilisateurcompetence__utilisateur=user
+            )
+
+            self.competence_niveaux = {
+                uc.competence.id: uc.niveau
+                for uc in UtilisateurCompetence.objects.filter(utilisateur=user)
+            }
+
+            self.disponibilites = list(Disponibilite.objects.filter(utilisateur=user).values(
+                'id', 'jour', 'heure_debut', 'heure_fin'
+            ))
+
+
+class UtilisateurCompetenceForm(forms.ModelForm):
+    class Meta:
+        model = UtilisateurCompetence
+        fields = ['competence', 'niveau']
+        widgets = {
+            'competence': forms.Select(attrs={'class': 'form-select'}),
+            'niveau': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+
+UtilisateurCompetenceFormSet = modelformset_factory(
+    UtilisateurCompetence,
+    form=UtilisateurCompetenceForm,
+    extra=1,
+    can_delete=True
+)
+
+
 class ProjetForm(forms.ModelForm):
     class Meta:
         model = Projet
