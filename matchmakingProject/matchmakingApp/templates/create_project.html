@@ -33,11 +33,11 @@
 
         <div class="mt-6">
             <h2 class="text-lg font-semibold mb-2">Compétences requises</h2>
-            <div id="competence-container" class="space-y-4">
+            <div id="compets-container" class="space-y-4">
             </div>
             <input type="hidden" name="total_competences" id="total_competences" value="0">
-            <button type="button" onclick="ajouterCompetence()" class="mt-6 mb-4 px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">
-                + Ajouter une compétence
+            <button type="button" id="addCompetBtn" class="mt-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl disabled:bg-green-300 disabled:cursor-not-allowed disabled:opacity-60">
+                Ajouter une compétence
             </button>
         </div>
 
@@ -51,37 +51,73 @@
 
 <script>
     const competences = JSON.parse('{{ competences_json|escapejs }}');
-    let competenceCount = 0;
+    const competencesCount = competences.length;
+    
+    function updateCompetenceOptions() {
+            const allSelects = document.querySelectorAll('select[name="competence_id"]');
+            const selectedValues = Array.from(allSelects).map(s => s.value);
 
-    function ajouterCompetence() {
-        competenceCount++;
-        document.getElementById('total_competences').value = competenceCount;
-
-        const container = document.getElementById('competence-container');
-        const div = document.createElement('div');
-        div.classList.add('flex', 'space-x-4', 'items-center', 'mb-2');
-        div.setAttribute('id', `competence-block-${competenceCount}`);
-
-        div.innerHTML = `
-            <select name="competence_${competenceCount}" class="w-1/2 px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
-                ${competences.map(c => `<option value="${c.id}">${c.nom}</option>`).join('')}
-            </select>
-            <select name="niveau_${competenceCount}" class="w-1/3 px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option value="Débutant">Débutant</option>
-                <option value="Intermédiaire">Intermédiaire</option>
-                <option value="Expert">Expert</option>
-            </select>
-            <button type="button" onclick="supprimerCompetence(${competenceCount})" class="text-red-600 text-xl hover:text-red-800">❌</button>
-        `;
-        container.appendChild(div);
-    }
-
-    function supprimerCompetence(id) {
-        const block = document.getElementById(`competence-block-${id}`);
-        if (block) {
-            block.remove();
+            allSelects.forEach(select => {
+                const currentValue = select.value;
+                Array.from(select.options).forEach(option => {
+                    if (option.value !== currentValue && selectedValues.includes(option.value)) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = '';
+                    }
+                });
+            });
+            
+            const addCompetBtn = document.getElementById('addCompetBtn');
+            if (selectedValues.length >= competencesCount) {
+                addCompetBtn.disabled = true;
+            } else {
+                addCompetBtn.disabled = false;
+            }
         }
-    }
+
+        function refreshCompetenceSelects() {
+            updateCompetenceOptions();
+
+            document.querySelectorAll('select[name="competence_id"]').forEach(select => {
+                select.removeEventListener('change', updateCompetenceOptions); // Évite doublon
+                select.addEventListener('change', updateCompetenceOptions);
+            });
+        }
+
+        document.getElementById('addCompetBtn').addEventListener('click', () => {
+            const container = document.getElementById('compets-container');
+            const div = document.createElement('div');
+            div.classList = 'compet-group flex flex-col sm:flex-row sm:items-center gap-2';
+            div.innerHTML = `
+                <select name="competence_id" class="border p-2 rounded w-1/2">
+                    <option disabled selected value="">-- Choisir une compétence --</option>
+                    {% for c in competences %}
+                        <option value="{{ c.id }}">{{ c.nom }}</option>
+                    {% endfor %}
+                </select>
+                <select name="competence_niveau" class="border p-2 rounded w-1/2">
+                    {% for niveau in niveaux_competence %}
+                        <option value="{{ niveau.0 }}">{{ niveau.0 }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" class="remove-compet text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+            `;
+            container.appendChild(div);
+ 
+            refreshCompetenceSelects();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            refreshCompetenceSelects();
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-compet')) {
+                e.target.parentElement.remove();
+                refreshCompetenceSelects();
+            }
+        });
 </script>
 
 
