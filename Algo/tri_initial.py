@@ -3,17 +3,17 @@ import sqlite3
 from classes import Utilisateur
 
 def generer_requete_sql(projet: Projet):
-    # Construction de la requête SQL
+    # Construction de la requête SQL adaptée à matchmakingDB.sql
     requete = f"""
     SELECT DISTINCT u.id
-    FROM utilisateurs u
-    JOIN competences_utilisateur cu ON u.id = cu.utilisateur_id
-    JOIN competences c ON cu.competence_id = c.id
+    FROM Utilisateur u
+    JOIN Utilisateur_Competence uc ON u.id = uc.utilisateur_id
+    JOIN Competence c ON uc.competence_id = c.id
     WHERE u.salaire_horaire <= {projet.budget_max}
-    AND u.mobilite IN ('{projet.mobilite}', 'hybride')
+    AND u.mobilite IN ('{projet.mobilite}', 'les deux')
     AND (
         {" OR ".join([
-            f"(cu.competence_id = {comp_id} AND cu.niveau >= {details['niveau']})"
+            f"(uc.competence_id = {comp_id} AND uc.niveau = '{details['niveau']}')"
             for comp_id, details in projet.competences_obligatoires.items()
         ])}
     )

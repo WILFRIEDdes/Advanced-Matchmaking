@@ -5,7 +5,13 @@ from django.contrib import messages
 from .forms import LoginForm, FirstLoginForm, ProjetForm, ProfilForm, UtilisateurCompetenceFormSet
 from .models import UtilisateurCompetence, Disponibilite, Utilisateur, Projet, ProjetCompetenceRequise, Competence
 from .utils.decorators import role_required
+from datetime import date
 import json
+import sys
+import os
+
+from .Algo.main import pipeline_creation_equipe, pipeline_ajustement_coefficients
+from .Algo.classes import Projet as AlgoProjet
 
 # Create your views here.
 
@@ -31,7 +37,6 @@ def login_view(request):
             error = "Email ou mot de passe incorrect."
 
     return render(request, 'login.html', {'form': form, 'error': error})
-
 
 @login_required
 def first_login(request):
@@ -255,3 +260,136 @@ def change_password(request):
         update_session_auth_hash(request, user)
         messages.success(request, "Mot de passe mis à jour avec succès.")
         return redirect("profile")
+
+# import 
+
+@login_required
+def test(request):
+    return render(request, 'test.html')
+
+@login_required
+def demander_equipe(request):
+    if request.method == "POST":
+        # Exemple de données pour le projet et les utilisateurs
+        horaires = {
+            "lundi": {"debut": 9, "fin": 17},
+            "mardi": {"debut": 9, "fin": 17},
+            "mercredi": {"debut": 9, "fin": 17},
+            "jeudi": {"debut": 9, "fin": 17},
+            "vendredi": {"debut": 9, "fin": 17}
+        }
+
+        competences_obligatoires = {
+            1: {"niveau": 3, "nombre_personnes": 2},
+            2: {"niveau": 2, "nombre_personnes": 1}
+        }
+
+        competences_bonus = {
+            3: {"niveau": 1, "nombre_personnes": 1},
+            4: {"niveau": 2, "nombre_personnes": 1}
+        }
+
+        taille_equipe = {"min": 3, "max": 5}
+
+        criteres_experience = [
+            {"annees_min": 2, "projets_min": 3, "nombre_personnes": 2},
+            {"annees_min": 5, "projets_min": 5, "nombre_personnes": 1}
+        ]
+
+        # Création de l'objet Projet
+        projet = AlgoProjet(
+            id=101,
+            nom="Développement Plateforme Matchmaking",
+            date_debut=date(2025, 4, 15),
+            date_fin=date(2025, 7, 15),
+            horaires=horaires,
+            competences_obligatoires=competences_obligatoires,
+            competences_bonus=competences_bonus,
+            taille_equipe=taille_equipe,
+            criteres_experience=criteres_experience,
+            budget_max=18000,
+            mobilite="distanciel"
+        )
+
+        if projet:
+            meilleure_equipe = pipeline_creation_equipe(projet)
+            messages.success(request, f"Équipe générée avec succès : {[membre.id for membre in meilleure_equipe.membres]}")
+        else:
+            messages.error(request, "Impossible de générer une équipe. Vérifiez les données.")
+        return redirect("test")
+
+@login_required
+def ajuster_coefficients(request):
+    if request.method == "POST":
+        # Exemple de feedbacks simulés
+        feedbacks = [
+            {"utilisateur_id": 1, "reponses": {"q1": 4, "q2": 5, "q3": 3, "q4": 4, "q5": 5}, "poids": 1.5},
+            {"utilisateur_id": 2, "reponses": {"q1": 3, "q2": 4, "q3": 4, "q4": 3, "q5": 4}, "poids": 1.2},
+        ]
+        projet_id = 1  # Exemple d'ID de projet
+        nouveaux_coeffs = pipeline_ajustement_coefficients(feedbacks, projet_id)
+        messages.success(request, f"Coefficients ajustés avec succès : {nouveaux_coeffs}")
+        return redirect("test")
+    
+    
+
+def obtenir_utilisateurs_depuis_projet(projet):
+    utilisateurs = []
+
+    # Construction des filtres de compétences requises
+    competence_q = Q()
+    for comp_id, details in projet.competences_obligatoires.items():
+        competence_q |= Q(competence__id=comp_id, niveau=details['niveau'])
+
+    # Filtrer les utilisateurs via les compétences obligatoires
+    matching_competences = UtilisateurCompetence.objects.filter(competence_q)
+    matching_user_ids = matching_competences.values_list('utilisateur_id', flat=True)
+
+    # Mobilité: compatibilité stricte ou 'mixte'
+    mobilites_acceptables = [projet.mobilite]
+    if projet.mobilite != 'mixte':
+        mobilites_acceptables.append('mixte')
+
+    # Récupérer tous les utilisateurs compatibles
+    candidats = Utilisateur.objects.filter(
+        id__in=matching_user_ids,
+        salaire_horaire__lte=projet.budget_max,
+        mobilite__in=mobilites_acceptables
+    ).prefetch_related('disponibilite_set', 'utilisateurcompetence_set')
+
+    for user in candidats:
+        # Compétences de l'utilisateur
+        competences = [
+            {'id': comp.competence.id, 'niveau': comp.niveau}
+            for comp in user.utilisateurcompetence_set.all()
+        ]
+
+        # Disponibilités formatées
+        disponibilites = {
+            dispo.jour: {
+                'debut': dispo.heure_debut.strftime('%H:%M') if dispo.heure_debut else '',
+                'fin': dispo.heure_fin.strftime('%H:%M') if dispo.heure_fin else ''
+            }
+            for dispo in user.disponibilite_set.all()
+        }
+
+        algo_user = AlgoUtilisateur(
+            id=user.id,
+            competences=competences,
+            disponibilites=disponibilites,
+            preferences={
+                'mobilite': user.mobilite,
+                'horaires': 'matin'  # placeholder, à ajuster selon ce que tu veux
+            },
+            experience={
+                'annees': user.annees_experience,
+                'projets_realises': user.projets_realises
+            },
+            salaire_horaire=float(user.salaire_horaire) if user.salaire_horaire else 0.0,
+            historique_notes=user.historique_notes if user.historique_notes else [],
+            mobilite=user.mobilite
+        )
+
+        utilisateurs.append(algo_user)
+
+    return utilisateurs

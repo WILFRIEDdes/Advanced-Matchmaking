@@ -5,9 +5,46 @@ from formation_equipes import *
 from optimisation_meilleure_equipe import *
 from coefficients import obtenir_coefficients
 from feedback_manager import enregistrer_feedback
-from ia_ajustement import ajuster_coefficients, sauver_coefficients
+from ia_ajustement import ajuster_coefficients_par_question, sauver_coefficients
 from collecte_feedbacks import traiter_feedbacks_utilisateurs
 import random
+
+def pipeline_creation_equipe(projet, utilisateurs_disponibles):
+    print(f"\n==== 📋 Pipeline : Création d'équipe optimale pour le projet '{projet.nom}' ====\n")
+
+    # Étape 1 : Calcul des scores des utilisateurs
+    coeffs = obtenir_coefficients()
+    utilisateurs_scores = calculer_score_utilisateur(projet, utilisateurs_disponibles, coeffs)
+    print("✅ Scores calculés pour chaque utilisateur.")
+
+    # Étape 2 : Formation d'équipes initiales
+    equipes_initiales = former_equipes(projet, utilisateurs_disponibles, max_utilisateurs=10)
+    print(f"✅ {len(equipes_initiales)} équipes initiales générées.")
+
+    # Étape 3 : Optimisation génétique
+    meilleure_equipe = algorithme_genetique(equipes_initiales[0], utilisateurs_disponibles, projet)
+    print("✅ Meilleure équipe optimisée sélectionnée :")
+    print(f"👥 Membres : {[m.id for m in meilleure_equipe.membres]}")
+    print(f"💰 Budget total : {meilleure_equipe.budget_total} €")
+    print(f"🌟 Score global : {meilleure_equipe.score_global}")
+
+    return meilleure_equipe
+
+def pipeline_ajustement_coefficients(feedbacks, projet_id):
+    print("\n==== 🤖 Pipeline : Ajustement des coefficients ====\n")
+
+    print("📊 Coefficients actuels :", obtenir_coefficients())
+    nouveaux_coeffs = traiter_feedbacks_utilisateurs(projet_id, feedbacks)
+
+    if nouveaux_coeffs:
+        print("✅ Nouveaux coefficients générés par l'IA :", nouveaux_coeffs)
+        sauver_coefficients(nouveaux_coeffs)
+    else:
+        print("⚠️ Pas d’ajustement effectué (feedbacks insuffisants ou incohérents).")
+        sauver_coefficients(obtenir_coefficients())
+
+    return nouveaux_coeffs or obtenir_coefficients()
+
 
 
 
@@ -114,31 +151,35 @@ print(f"Équipe : {[membre.id for membre in meilleure_equipe.membres]}, Budget t
 
 # -------------- Simulation de feedbacks utilisateurs --------------
 
-# q1 : Le projet s’est-il bien déroulé selon vous ? (1 à 5)
+# q1 : Êtes-vous globalement satisfait du projet ? (lié à la note générale)
+# q2 : L’équipe possédait-elle les compétences techniques nécessaires ? (compétences obligatoires)
+# q3 : La communication dans l’équipe était-elle fluide ? (communication)
+# q4 : Le projet a-t-il été bien géré dans le temps ? (expérience en gestion)
+# q5 : Vous êtes-vous senti à l’aise dans votre rôle ? (compétences bonus / soft skills)
 
-# q2 : Avez-vous trouvé l’équipe compétente techniquement ? (1 à 5)
-
-# q3 : La communication au sein de l’équipe était-elle fluide ? (1 à 5)
-
-# q4 : Le projet a-t-il respecté les délais ? (1 à 5)
-
-# q5 : Vous êtes-vous senti à l’aise dans votre rôle ? (1 à 5)
-
+import random
+from collecte_feedbacks import traiter_feedbacks_utilisateurs
+from coefficients import obtenir_coefficients
 
 # Simuler des feedbacks utilisateurs de manière aléatoire
 feedbacks_simules = []
 for _ in range(20):
     utilisateur_id = random.randint(1, 15)
-    reponses = {f"q{i}": random.randint(1, 5) for i in range(1, 6)}
+    reponses = {
+        "q1": random.randint(1, 5),
+        "q2": random.randint(1, 5),
+        "q3": random.randint(1, 5),
+        "q4": random.randint(1, 5),
+        "q5": random.randint(1, 5),
+    }
     poids = round(random.uniform(1.0, 2.0), 1)
     feedbacks_simules.append({"utilisateur_id": utilisateur_id, "reponses": reponses, "poids": poids})
 
-
-# Traitement + mise à jour des coefficients
-
+# Afficher les coefficients initiaux
 print("\n>> ✅ Coefficients initiaux :", obtenir_coefficients())
-nouveaux_coeffs = traiter_feedbacks_utilisateurs(projet_demo.id, feedbacks_simules)
 
+# Traitement + ajustement par IA
+nouveaux_coeffs = traiter_feedbacks_utilisateurs(projet_demo.id, feedbacks_simules)
 
 if nouveaux_coeffs:
     print("\n>> ✅ Coefficients ajustés par l'IA :", nouveaux_coeffs)

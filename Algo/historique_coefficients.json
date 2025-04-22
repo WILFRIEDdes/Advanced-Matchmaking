@@ -1,0 +1,142 @@
+[
+    {
+        "timestamp": "2025-04-22T11:30:00.009016",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:30:00.018756",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:30:13.927062",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:30:13.932827",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:30:36.351432",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:30:36.357966",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:32:10.134523",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:32:10.140584",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:32:15.546549",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:32:15.554580",
+        "coefficients": {
+            "notes": 0.0,
+            "competences_obligatoires": 0.0,
+            "communication": 0.0,
+            "experience": 0.0,
+            "competences_bonus": 0.0
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:34:11.681725",
+        "coefficients": {
+            "notes": 1.6,
+            "competences_obligatoires": 1.3,
+            "communication": 0.0,
+            "experience": 1.05,
+            "competences_bonus": 1.05
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:34:11.687724",
+        "coefficients": {
+            "notes": 1.6,
+            "competences_obligatoires": 1.3,
+            "communication": 0.0,
+            "experience": 1.05,
+            "competences_bonus": 1.05
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:34:50.051361",
+        "coefficients": {
+            "notes": 1.438477027437893,
+            "competences_obligatoires": 1.269536350509556,
+            "communication": 0.0,
+            "experience": 1.1836160111770275,
+            "competences_bonus": 1.0617010771114557
+        }
+    },
+    {
+        "timestamp": "2025-04-22T11:34:50.058894",
+        "coefficients": {
+            "notes": 1.438477027437893,
+            "competences_obligatoires": 1.269536350509556,
+            "communication": 0.0,
+            "experience": 1.1836160111770275,
+            "competences_bonus": 1.0617010771114557
+        }
+    }
+]

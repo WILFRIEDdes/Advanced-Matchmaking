@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .views import demander_equipe, ajuster_coefficients
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -13,5 +14,8 @@ urlpatterns = [
     path('create_project/', views.create_project, name='create_project'),
     path('calendar/', views.calendar, name='calendar'),
     path('profile/', views.profile, name='profile'),
+    path('test/', views.test, name='test'),
     path('change_password/', views.change_password, name='change_password'),
+    path('demander-equipe/', demander_equipe, name='demander_equipe'),
+    path('ajuster-coefficients/', ajuster_coefficients, name='ajuster_coefficients'),
 ]
