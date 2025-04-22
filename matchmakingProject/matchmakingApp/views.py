@@ -316,7 +316,7 @@ def demander_equipe(request):
             messages.success(request, f"Équipe générée avec succès : {[membre.id for membre in meilleure_equipe.membres]}")
         else:
             messages.error(request, "Impossible de générer une équipe. Vérifiez les données.")
-        return redirect("test")
+        return render(request, "test.html", {"equipe": meilleure_equipe})
 
 @login_required
 def ajuster_coefficients(request):
@@ -327,69 +327,6 @@ def ajuster_coefficients(request):
             {"utilisateur_id": 2, "reponses": {"q1": 3, "q2": 4, "q3": 4, "q4": 3, "q5": 4}, "poids": 1.2},
         ]
         projet_id = 1  # Exemple d'ID de projet
-        nouveaux_coeffs = pipeline_ajustement_coefficients(feedbacks, projet_id)
-        messages.success(request, f"Coefficients ajustés avec succès : {nouveaux_coeffs}")
-        return redirect("test")
-    
-    
-
-def obtenir_utilisateurs_depuis_projet(projet):
-    utilisateurs = []
-
-    # Construction des filtres de compétences requises
-    competence_q = Q()
-    for comp_id, details in projet.competences_obligatoires.items():
-        competence_q |= Q(competence__id=comp_id, niveau=details['niveau'])
-
-    # Filtrer les utilisateurs via les compétences obligatoires
-    matching_competences = UtilisateurCompetence.objects.filter(competence_q)
-    matching_user_ids = matching_competences.values_list('utilisateur_id', flat=True)
-
-    # Mobilité: compatibilité stricte ou 'mixte'
-    mobilites_acceptables = [projet.mobilite]
-    if projet.mobilite != 'mixte':
-        mobilites_acceptables.append('mixte')
-
-    # Récupérer tous les utilisateurs compatibles
-    candidats = Utilisateur.objects.filter(
-        id__in=matching_user_ids,
-        salaire_horaire__lte=projet.budget_max,
-        mobilite__in=mobilites_acceptables
-    ).prefetch_related('disponibilite_set', 'utilisateurcompetence_set')
-
-    for user in candidats:
-        # Compétences de l'utilisateur
-        competences = [
-            {'id': comp.competence.id, 'niveau': comp.niveau}
-            for comp in user.utilisateurcompetence_set.all()
-        ]
-
-        # Disponibilités formatées
-        disponibilites = {
-            dispo.jour: {
-                'debut': dispo.heure_debut.strftime('%H:%M') if dispo.heure_debut else '',
-                'fin': dispo.heure_fin.strftime('%H:%M') if dispo.heure_fin else ''
-            }
-            for dispo in user.disponibilite_set.all()
-        }
-
-        algo_user = AlgoUtilisateur(
-            id=user.id,
-            competences=competences,
-            disponibilites=disponibilites,
-            preferences={
-                'mobilite': user.mobilite,
-                'horaires': 'matin'  # placeholder, à ajuster selon ce que tu veux
-            },
-            experience={
-                'annees': user.annees_experience,
-                'projets_realises': user.projets_realises
-            },
-            salaire_horaire=float(user.salaire_horaire) if user.salaire_horaire else 0.0,
-            historique_notes=user.historique_notes if user.historique_notes else [],
-            mobilite=user.mobilite
-        )
-
-        utilisateurs.append(algo_user)
-
-    return utilisateurs
+        coeffs = pipeline_ajustement_coefficients(feedbacks, projet_id)
+        messages.success(request, f"Coefficients ajustés avec succès : {coeffs}")
+        return render(request, "test.html", {"nouveaux_coeffs": coeffs[0], "anciens_coeffs": coeffs[1]})

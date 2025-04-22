@@ -61,5 +61,41 @@
             "experience": 0.1903843938913394,
             "notes": 0.10951481108908999
         }
+    },
+    {
+        "timestamp": "2025-04-22T13:18:31.906234",
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.13604985613439902,
+            "experience": 0.12528217516598414,
+            "notes": 0.11971650129530237
+        }
+    },
+    {
+        "timestamp": "2025-04-22T13:46:17.980611",
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.12155807057540353,
+            "experience": 0.11922219601024851,
+            "notes": 0.07903978246566173
+        }
+    },
+    {
+        "timestamp": "2025-04-22T13:47:12.289674",
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.10784166583107802,
+            "experience": 0.10985615590686432,
+            "notes": 0.07309384510784794
+        }
+    },
+    {
+        "timestamp": "2025-04-22T13:49:12.228176",
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.09739039173572536,
+            "experience": 0.10102031132381015,
+            "notes": 0.06420567298308849
+        }
     }
 ]
