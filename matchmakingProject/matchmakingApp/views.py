@@ -20,6 +20,7 @@ from .models import (
 from .utils.decorators import role_required
 from datetime import date, time
 from django.utils import timezone
+from django.db.models import Exists, OuterRef
 import json
 import sys
 import os
@@ -237,7 +238,9 @@ def team_generation(request, projet_id):
 @login_required
 @role_required(['manager'])
 def list_employees(request):
-    employes = Utilisateur.objects.filter(role='employe')
+    membres_equipes = EquipeMembre.objects.filter(utilisateur=OuterRef('pk'))
+    employes = Utilisateur.objects.filter(role='employe') \
+        .annotate(est_dans_une_equipe=Exists(membres_equipes))
     return render(request, 'list_employees.html', {'employes': employes})
 
 
@@ -299,6 +302,21 @@ def survey_view(request, projet_id):
                 utilisateur=request.user,
                 projet=projet
             )
+
+            feedbacks = [
+                {
+                    "utilisateur_id": request.user.id,
+                    "reponses": {
+                        "q1": form.cleaned_data['q1'],
+                        "q2": form.cleaned_data['q2'],
+                        "q3": form.cleaned_data['q3'],
+                        "q4": form.cleaned_data['q4'],
+                        "q5": form.cleaned_data['q5']
+                    },
+                    "poids": 1.0  # Poids par défaut, à ajuster si nécessaire
+                }
+            ]
+            pipeline_ajustement_coefficients(feedbacks, projet_id)
 
             messages.success(request, "Merci pour votre réponse au questionnaire !")
             return redirect('list_projects')

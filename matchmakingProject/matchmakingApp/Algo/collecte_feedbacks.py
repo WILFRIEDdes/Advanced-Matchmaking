@@ -11,7 +11,14 @@ def traiter_feedbacks_utilisateurs(projet_id, feedbacks_utilisateurs):
     """
     for feedback in feedbacks_utilisateurs:
         reponses = feedback["reponses"]
-        note_globale = sum(reponses.values()) / len(reponses)
+        print (f"feedback : {feedback}")
+        print (f"reponses : {reponses}")
+        print(f"reponses.values() : {reponses.values()}")
+        print (f"len(reponses) : {len(reponses)}")
+        valeurs = list(map(int, reponses.values()))
+        print (f"valeurs : {valeurs}")
+        print (f"sum(valeurs) : {sum(valeurs)}")
+        note_globale = sum(valeurs) / len(reponses)
         resultat = 1 if note_globale >= 3.5 else 0
         poids = feedback["poids"]
         coeffs_utilises = obtenir_coefficients()

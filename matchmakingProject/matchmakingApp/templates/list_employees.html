@@ -15,6 +15,7 @@
                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Mobilité</th>
                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Expérience</th>
                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Projets</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Disponibilité</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
@@ -26,6 +27,13 @@
                 <td class="px-4 py-2">{{ employe.mobilite|capfirst }}</td>
                 <td class="px-4 py-2 text-center">{{ employe.annees_experience }}</td>
                 <td class="px-4 py-2 text-center">{{ employe.projets_realises }}</td>
+                <td class="px-4 py-2 text-center">
+                    {% if employe.est_dans_une_equipe %}
+                        <span class="text-red-600 font-semibold">Occupé</span>
+                    {% else %}
+                        <span class="text-green-600 font-semibold">Disponible</span>
+                    {% endif %}
+                </td>
             </tr>
             {% empty %}
             <tr>

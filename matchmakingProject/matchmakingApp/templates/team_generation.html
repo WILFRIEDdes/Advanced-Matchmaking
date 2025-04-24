@@ -1,7 +1,30 @@
-{% extends 'base.html' %}
-
-{% block title %}Generation d'équipe{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
-<h2>Generation d'équipe</h2>
+<h1 class="text-2xl font-bold mb-4">Créer une équipe pour : {{ projet.nom }}</h1>
+
+<p><strong>Description :</strong> {{ projet.description }}</p>
+<p><strong>Budget :</strong> {{ projet.budget_max }} €</p>
+<p><strong>Mobilité :</strong> {{ projet.mobilite }}</p>
+<p><strong>Taille équipe :</strong> {{ projet.taille_equipe }}</p>
+
+<h2 class="mt-6 font-semibold text-lg">Compétences requises :</h2>
+<ul class="list-disc pl-6">
+    {% for cr in competences_requises %}
+        <li>{{ cr.competence.nom }} (Niveau {{ cr.niveau_requis }})</li>
+    {% empty %}
+        <li>Aucune compétence spécifiée.</li>
+    {% endfor %}
+</ul>
+
+<form method="post" action="{% url 'demander_equipe' %}" class="mt-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 my-4 rounded">
+        Demander une équipe
+    </button>
+    {% if error %}
+      <p style="color:red">{{ error }}</p>
+    {% endif %}
+</form>
 {% endblock %}

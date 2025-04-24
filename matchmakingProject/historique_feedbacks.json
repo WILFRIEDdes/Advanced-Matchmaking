@@ -834,5 +834,16 @@
         },
         "resultat": 1,
         "poids": 1.2
+    },
+    {
+        "projet_id": 14,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.09739039173572536,
+            "experience": 0.10102031132381015,
+            "notes": 0.06420567298308849
+        },
+        "resultat": 1,
+        "poids": 1.0
     }
 ]

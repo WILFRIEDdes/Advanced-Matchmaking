@@ -97,5 +97,14 @@
             "experience": 0.10102031132381015,
             "notes": 0.06420567298308849
         }
+    },
+    {
+        "timestamp": "2025-04-24T23:32:11.992755",
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.09770144070354825,
+            "experience": 0.09623264538190542,
+            "notes": 0.0605160131292275
+        }
     }
 ]
