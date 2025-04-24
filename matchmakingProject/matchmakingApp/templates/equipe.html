@@ -1,0 +1,124 @@
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Equipe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .scrolling-wrapper {
+            animation: scroll-left 40s linear infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-violet-50 text-gray-900 flex flex-col min-h-screen pt-16">
+
+<nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="{% url 'index' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="{% static 'images/logoentreprise.png' %}" class="h-8" alt="TeamBuilding Logo">
+        </a>
+        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Se connecter</button>
+        </div>
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+            <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li><a href="{% url 'index' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Accueil</a></li>
+                <li><a href="{% url 'projet' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Projet</a></li>
+                <li><a href="{% url 'equipe' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Equipe</a></li>
+                <li><a href="{% url 'objectif' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Objectif</a></li>
+                <li><a href="{% url 'contact' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="overflow-hidden mt-12 px-6 relative">
+    <div class="max-w-6xl mx-auto mb-4">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Membres de l'équipe</h2>
+    </div>
+    <div class="max-w-6xl mx-auto overflow-hidden whitespace-nowrap">
+        <div class="scrolling-wrapper flex w-max">
+            <div class="flex space-x-6">
+                {% for i in "12" %}
+                    <div class="min-w-[250px] h-[300px] bg-white rounded-2xl shadow-md flex flex-col items-center text-center overflow-hidden mb-2">
+                        <div class="h-[60%] w-full flex justify-center items-center p-4">
+                            <img src="{% static 'images/guigui.jpg' %}" alt="Guillaume" class="w-32 h-32 rounded-full object-cover object-top">
+                        </div>
+                        <div class="h-[40%] w-full p-2 flex flex-col items-center justify-center">
+                            <h3 class="text-base font-semibold text-gray-800">Guillaume Denis</h3>
+                            <p class="text-sm text-gray-600">Chef de projet</p>
+                        </div>
+                    </div>
+                    <div class="min-w-[250px] h-[300px] bg-white rounded-2xl shadow-md flex flex-col items-center text-center overflow-hidden mb-2">
+                        <div class="h-[60%] w-full flex justify-center items-center p-4">
+                            <img src="{% static 'images/benj.jpg' %}" alt="Benjamin" class="w-32 h-32 rounded-full object-cover object-top">
+                        </div>
+                        <div class="h-[40%] w-full p-2 flex flex-col items-center justify-center">
+                            <h3 class="text-base font-semibold text-gray-800">Benjamin Hubert</h3>
+                            <p class="text-sm text-gray-600">Data Scientist</p>
+                        </div>
+                    </div>
+                    <div class="min-w-[250px] h-[300px] bg-white rounded-2xl shadow-md flex flex-col items-center text-center overflow-hidden mb-2">
+                        <div class="h-[60%] w-full flex justify-center items-center p-4">
+                            <img src="{% static 'images/paul.png' %}" alt="Paul" class="w-32 h-32 rounded-full object-cover object-top">
+                        </div>
+                        <div class="h-[40%] w-full p-2 flex flex-col items-center justify-center">
+                            <h3 class="text-base font-semibold text-gray-800">Paul Mazaingue</h3>
+                            <p class="text-sm text-gray-600">IA</p>
+                        </div>
+                    </div>
+                    <div class="min-w-[250px] h-[300px] bg-white rounded-2xl shadow-md flex flex-col items-center text-center overflow-hidden mb-2">
+                        <div class="h-[60%] w-full flex justify-center items-center p-4">
+                            <img src="{% static 'images/marc.png' %}" alt="Wilfried" class="w-32 h-32 rounded-full object-cover object-top">
+                        </div>
+                        <div class="h-[40%] w-full p-2 flex flex-col items-center justify-center">
+                            <h3 class="text-base font-semibold text-gray-800">Wilfried Deswarte</h3>
+                            <p class="text-sm text-gray-600">Data Scientist</p>
+                        </div>
+                    </div>
+                    <div class="min-w-[250px] h-[300px] bg-white rounded-2xl shadow-md flex flex-col items-center text-center overflow-hidden mb-2">
+                        <div class="h-[60%] w-full flex justify-center items-center p-4">
+                            <img src="{% static 'images/amine.jpg' %}" alt="Amine" class="w-32 h-32 rounded-full object-cover object-top">
+                        </div>
+                        <div class="h-[40%] w-full p-2 flex flex-col items-center justify-center">
+                            <h3 class="text-base font-semibold text-gray-800">Amine El Bakali</h3>
+                            <p class="text-sm text-gray-600">Scrum Master</p>
+                        </div>
+                    </div>
+                    <div class="min-w-[250px] h-[300px] bg-white rounded-2xl shadow-md flex flex-col items-center text-center overflow-hidden mb-2">
+                        <div class="h-[60%] w-full flex justify-center items-center p-4">
+                            <img src="{% static 'images/adam.jpg' %}" alt="Adam" class="w-32 h-32 rounded-full object-cover object-top">
+                        </div>
+                        <div class="h-[40%] w-full p-2 flex flex-col items-center justify-center">
+                            <h3 class="text-base font-semibold text-gray-800">Adam Vidal</h3>
+                            <p class="text-sm text-gray-600">Développeur</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="px-6 py-8"> 
+    <div class="max-w-6xl mx-auto mb-4">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Photo d'équipe</h2>
+    </div>
+    <div class="max-w-6xl mx-auto">
+        <div class="w-full h-96 bg-gray-200 rounded-xl flex items-center justify-center">
+            <span class="text-gray-500 text-lg">Zone réservée à la photo d'équipe</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
