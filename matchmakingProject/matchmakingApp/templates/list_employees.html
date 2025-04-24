@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Employés{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto mt-8 p-6 bg-white rounded shadow">
+    <h2 class="text-2xl font-bold mb-4">Liste des employés</h2>
+
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Nom</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Prénom</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Email</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Mobilité</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Expérience</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Projets</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for employe in employes %}
+            <tr class="hover:bg-gray-50 transition">
+                <td class="px-4 py-2">{{ employe.nom }}</td>
+                <td class="px-4 py-2">{{ employe.prenom }}</td>
+                <td class="px-4 py-2">{{ employe.mail }}</td>
+                <td class="px-4 py-2">{{ employe.mobilite|capfirst }}</td>
+                <td class="px-4 py-2 text-center">{{ employe.annees_experience }}</td>
+                <td class="px-4 py-2 text-center">{{ employe.projets_realises }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center py-4 text-gray-500">Aucun employé trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

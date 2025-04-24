@@ -1,0 +1,838 @@
+[
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.6
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.6
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 2.0
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.1
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.9
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.6
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 1,
+        "poids": 1.6
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 1,
+        "poids": 1.6
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.1
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.9
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 1,
+        "poids": 1.1
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1,
+            "competences_bonus": 0.5,
+            "experience": 1,
+            "notes": 1
+        },
+        "resultat": 0,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 1,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.0
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 2.0
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 2.0
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.3
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 1,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 0,
+        "poids": 1.1
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 1,
+        "poids": 1.1
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 0.0,
+            "competences_bonus": 0.0,
+            "experience": 0.0,
+            "notes": 0.0
+        },
+        "resultat": 1,
+        "poids": 2.0
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 2.0
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.9
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.6
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 1,
+        "poids": 1.1
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.9
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.9
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.8
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.4
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.7
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.0
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.3
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 101,
+        "coefficients": {
+            "competences_obligatoires": 1.1,
+            "competences_bonus": 1.45,
+            "experience": 1.3,
+            "notes": 1.1500000000000001
+        },
+        "resultat": 0,
+        "poids": 1.1
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 1.2901316529952187,
+            "competences_bonus": 1.403809686292235,
+            "experience": 1.1743330732230144,
+            "notes": 1.131725587489532
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 1.2901316529952187,
+            "competences_bonus": 1.403809686292235,
+            "experience": 1.1743330732230144,
+            "notes": 1.131725587489532
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.6891855949551545,
+            "experience": 0.6732719067402921,
+            "notes": 0.26055391375804937
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.6891855949551545,
+            "experience": 0.6732719067402921,
+            "notes": 0.26055391375804937
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.274740373899683,
+            "experience": 0.49751679498788726,
+            "notes": 0.2893100885990147
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.274740373899683,
+            "experience": 0.49751679498788726,
+            "notes": 0.2893100885990147
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.20635935685286694,
+            "experience": 0.22902985790768238,
+            "notes": 0.14888890788441708
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.20635935685286694,
+            "experience": 0.22902985790768238,
+            "notes": 0.14888890788441708
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.16142494261083898,
+            "experience": 0.1903843938913394,
+            "notes": 0.10951481108908999
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.16142494261083898,
+            "experience": 0.1903843938913394,
+            "notes": 0.10951481108908999
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.13604985613439902,
+            "experience": 0.12528217516598414,
+            "notes": 0.11971650129530237
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.13604985613439902,
+            "experience": 0.12528217516598414,
+            "notes": 0.11971650129530237
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.12155807057540353,
+            "experience": 0.11922219601024851,
+            "notes": 0.07903978246566173
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.12155807057540353,
+            "experience": 0.11922219601024851,
+            "notes": 0.07903978246566173
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.10784166583107802,
+            "experience": 0.10985615590686432,
+            "notes": 0.07309384510784794
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.10784166583107802,
+            "experience": 0.10985615590686432,
+            "notes": 0.07309384510784794
+        },
+        "resultat": 1,
+        "poids": 1.2
+    }
+]

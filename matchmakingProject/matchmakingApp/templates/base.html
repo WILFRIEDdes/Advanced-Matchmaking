@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}TeamBuilding{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        .word {
+            opacity: 0;
+            animation: fade-in-word 1s ease-in-out forwards;
+        }
+    
+        @keyframes fade-in-word {
+            from {
+                opacity: 0;
+                transform: translateY(0.5rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .title {
+            opacity: 0;
+            animation: fade-in-title 1s ease-in-out forwards;
+        }
+    
+        @keyframes fade-in-title {
+            from {
+                opacity: 0;
+                transform: translateY(0.5rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+    
+        .text-zone {
+            opacity: 1;
+        }
+    
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .card-animate {
+            animation: fadeInUp 3s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .scrolling-wrapper {
+            animation: scroll-left 40s linear infinite;
+        }
+
+        .fade-in-number, .fade-in-text {
+            opacity: 0;
+            animation: fade-in 1s ease-out forwards;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(0.5rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+    </style>
+</head>
+
+<body class="bg-violet-50 text-gray-900 flex flex-col min-h-screen pt-2">
+    <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="{% url 'index' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src="{% static 'images/logoentreprise.png' %}" class="h-8" alt="TeamBuilding Logo">
+      </a>
+      <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Se connecter</button>
+          <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+      </div>
+      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a href="{% url 'index' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Accueil</a>
+          </li>
+          <li>
+            <a href="{% url 'projet' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Projet</a>
+          </li>
+          <li>
+            <a href="{% url 'equipe' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Equipe</a>
+          </li>
+          <li>
+            <a href="{% url 'objectif' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Objectif</a>
+          </li>
+          <li>
+            <a href="{% url 'contact' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+          </li>
+        </ul>
+      </div>
+      </div>
+    </nav>
+
+    <!-- Navbar -->
+    <!-- <nav class="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 shadow-md rounded-b-lg px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'index' %}" class="text-white text-2xl font-extrabold tracking-wide">Mon Site</a>
+            <div class="flex items-center space-x-6">
+                {% if user.is_authenticated %}
+                    {% if user.role == 'manager' %}
+                        <a href="{% url 'list_projects' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Projets</a>
+                        <a href="{% url 'list_employees' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Employés</a>
+                        <a href="{% url 'create_project' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Créer un projet</a>
+                        <a href="{% url 'calendar' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Calendrier</a>
+                        <a href="{% url 'profile' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mon Profil</a>
+                    {% elif user.role == 'employe' %}
+                        <a href="{% url 'list_projects' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mes Projets</a>
+                        <a href="{% url 'calendar' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Calendrier</a>
+                        <a href="{% url 'profile' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mon Profil</a>
+                    {% endif %}
+                    <span class="text-white font-semibold">Bienvenue, {{ user.prenom }} {{ user.nom }} !</span>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Déconnexion</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Connexion</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav> -->
+    
+
+
+    <!-- Contenu principal -->
+    <div class="container mx-auto p-8">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+[
+    {
+        "timestamp": "2025-04-24T12:51:28.085159",
+        "coefficients": {
+            "notes": 1.1017895571600869,
+            "competences_obligatoires": 1.3184140371994846,
+            "experience": 1.3155979282416144,
+            "competences_bonus": 1.3402246256450325
+        }
+    },
+    {
+        "timestamp": "2025-04-24T12:51:48.740660",
+        "coefficients": {
+            "notes": 1.285991251043185,
+            "competences_obligatoires": 1.214437394768903,
+            "experience": 1.1584668680806902,
+            "competences_bonus": 1.3834864854981883
+        }
+    }
+]

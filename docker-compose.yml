@@ -1,5 +1,5 @@
 networks:
-  default: 
+  default:
     driver: bridge
     ipam:
       config:
@@ -19,11 +19,11 @@ services:
       - "3306:3306"
     expose:
         - '3306'
-    networks : 
+    networks :
       default:
         ipv4_address: 172.19.0.2
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
@@ -34,7 +34,7 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     restart: always
-    networks : 
+    networks :
       - default
     environment:
       PMA_HOST: db
@@ -51,7 +51,7 @@ services:
   #   image: advanced-matchmaking
   #   container_name: django_app
   #   restart: always
-  #   networks : 
+  #   networks :
   #     - default
   #   ports:
   #     - "8000:8000"

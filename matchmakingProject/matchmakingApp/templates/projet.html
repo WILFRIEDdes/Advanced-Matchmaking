@@ -1,60 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projet</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    function openModal() {
-      const modal = document.getElementById("modal");
-      modal.classList.remove("hidden");
-      modal.classList.add("animate-fadeIn");
-    }
-
-    function closeModal() {
-      const modal = document.getElementById("modal");
-      modal.classList.add("hidden");
-      modal.classList.remove("animate-fadeIn");
-    }
-
-    function openModal2() {
-      const modal2 = document.getElementById("modal2");
-      modal2.classList.remove("hidden");
-      modal2.classList.add("animate-fadeIn");
-    }
-
-    function closeModal2() {
-      const modal2 = document.getElementById("modal2");
-      modal2.classList.add("hidden");
-      modal2.classList.remove("animate-fadeIn");
-    }
-
-    function openModal3() {
-      const modal3 = document.getElementById("modal3");
-      modal3.classList.remove("hidden");
-      modal3.classList.add("animate-fadeIn");
-    }
-
-    function closeModal3() {
-      const modal3 = document.getElementById("modal3");
-      modal3.classList.add("hidden");
-      modal3.classList.remove("animate-fadeIn");
-    }
-
-  </script>
-  <style>
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fadeIn {
-      animation: fadeIn 0.4s ease-out forwards;
-    }
-  </style>
-</head>
-
+{% extends 'base.html' %}
 {% load static %}
+
+{% block title %}Projets{% endblock %}
+
+{% block content %}
 
 <body class="bg-violet-50 text-gray-900 flex flex-col min-h-screen pt-16">
   <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -203,7 +152,44 @@
       </div>
     </div>
   </div>
-  
 
-</body>
-</html>
+  <script>
+    function openModal() {
+      const modal = document.getElementById("modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("animate-fadeIn");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("animate-fadeIn");
+    }
+
+    function openModal2() {
+      const modal2 = document.getElementById("modal2");
+      modal2.classList.remove("hidden");
+      modal2.classList.add("animate-fadeIn");
+    }
+
+    function closeModal2() {
+      const modal2 = document.getElementById("modal2");
+      modal2.classList.add("hidden");
+      modal2.classList.remove("animate-fadeIn");
+    }
+
+    function openModal3() {
+      const modal3 = document.getElementById("modal3");
+      modal3.classList.remove("hidden");
+      modal3.classList.add("animate-fadeIn");
+    }
+
+    function closeModal3() {
+      const modal3 = document.getElementById("modal3");
+      modal3.classList.add("hidden");
+      modal3.classList.remove("animate-fadeIn");
+    }
+
+  </script>
+
+{% endblock %}
