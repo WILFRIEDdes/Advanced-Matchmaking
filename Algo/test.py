@@ -1,57 +1,76 @@
+import random
 from collecte_feedbacks import traiter_feedbacks_utilisateurs
 from coefficients import obtenir_coefficients
-from datetime import date
-from classes import Projet
-import random
 
-# 1. Créer un faux projet (minimal)
-projet_test = Projet(
-    id=999,
-    nom="Projet Test Influence Technique",
-    date_debut=date(2025, 5, 1),
-    date_fin=date(2025, 6, 1),
-    horaires={}, competences_obligatoires={}, competences_bonus={},
-    taille_equipe={"min": 3, "max": 5},
-    criteres_experience=[],
-    budget_max=10000,
-    mobilite="distanciel"
-)
+def generer_feedbacks_test(n=100):
+    feedbacks = []
+    for _ in range(n):
+        utilisateur_id = random.randint(1, 100)
+        reponses = {
+            "q1": 5.0,   # notes → très bonnes → IA devrait augmenter le coeff
+            "q2": 1.0,   # compétences obligatoires → très mauvaises → coeff devrait descendre
+            "q3": 2.5,   # communication (ignorée)
+            "q4": 5.0,   # expérience → très bonne → IA devrait augmenter
+            "q5": 1.0,   # bonus → très mauvais → IA devrait descendre
+        }
+        poids = round(random.uniform(1.0, 2.0), 1)
 
-# 2. Obtenir les coefficients avant feedbacks
-coeffs_avant = obtenir_coefficients()
-print("✅ Coefficients avant feedback :", coeffs_avant)
+        feedbacks.append({
+            "utilisateur_id": utilisateur_id,
+            "reponses": reponses,
+            "poids": poids
+        })
+    return feedbacks
 
-# 3. Générer des feedbacks avec q2 bas (technique)
-feedbacks_q2_basse = []
-for i in range(30):
-    reponses = {
-        "q1": 5,
-        "q2": 1,  # 👈 compétences techniques faibles
-        "q3": 5,
-        "q4": 5,
-        "q5": 5
+def afficher_stats_feedbacks(feedbacks):
+    print("\n📊 Moyennes des notes données (feedbacks simulés) :")
+    q_tot = {"q1": 0, "q2": 0, "q4": 0, "q5": 0}
+    for fb in feedbacks:
+        for q in q_tot:
+            q_tot[q] += fb["reponses"][q]
+    for q in q_tot:
+        moyenne = q_tot[q] / len(feedbacks)
+        print(f" - {q:<3} ({q_to_cible(q):<25}) : {moyenne:.2f}")
+
+def q_to_cible(q):
+    return {
+        "q1": "notes",
+        "q2": "competences_obligatoires",
+        "q4": "experience",
+        "q5": "competences_bonus"
+    }[q]
+
+def afficher_comparaison(anciens, nouveaux, attentes):
+    print("\n📈 Comparaison des coefficients :")
+    for cle in anciens:
+        avant = round(anciens[cle], 3)
+        apres = round(nouveaux.get(cle, 0), 3)
+        variation = round(apres - avant, 3)
+        direction = "➡️" if variation == 0 else ("⬆️" if variation > 0 else "⬇️")
+        attendu = attentes.get(cle, "—")
+        statut = "✅ cohérent" if direction in attendu else "⚠️ incohérent" if attendu != "—" else ""
+        print(f"{cle:<25} : {avant} → {apres} {direction}  (Δ = {variation:+.3f})   {attendu} {statut}")
+
+def main():
+    print("🧪 Test de comportement IA après feedbacks extrêmes")
+    anciens = obtenir_coefficients()
+
+    feedbacks = generer_feedbacks_test(n=100)
+    afficher_stats_feedbacks(feedbacks)
+
+    attentes = {
+        "notes": "⬆️ attendu",
+        "competences_obligatoires": "⬇️ attendu",
+        "experience": "⬆️ attendu",
+        "competences_bonus": "⬇️ attendu"
     }
-    poids = round(random.uniform(1.0, 2.0), 2)
-    feedbacks_q2_basse.append({
-        "utilisateur_id": i + 1,
-        "reponses": reponses,
-        "poids": poids
-    })
 
-# 4. Appliquer le pipeline d'ajustement
-traiter_feedbacks_utilisateurs(projet_test.id, feedbacks_q2_basse)
+    nouveaux = traiter_feedbacks_utilisateurs(projet_id=999, feedbacks_utilisateurs=feedbacks)
 
-# 5. Recharger les coefficients après apprentissage
-coeffs_apres = obtenir_coefficients()
-print("✅ Coefficients après feedback :", coeffs_apres)
+    if nouveaux:
+        afficher_comparaison(anciens, nouveaux, attentes)
+    else:
+        print("⚠️ Aucun ajustement effectué (feedbacks insuffisants ?)")
 
-# 6. Comparer l'évolution du coefficient "competences_obligatoires"
-diff = coeffs_apres["competences_obligatoires"] - coeffs_avant["competences_obligatoires"]
-print(f"\n📊 Évolution du coefficient 'competences_obligatoires' : {coeffs_avant['competences_obligatoires']} → {coeffs_apres['competences_obligatoires']} (diff: {diff:.3f})")
-
-if diff < 0:
-    print("✅ Le coefficient a diminué comme attendu (les feedbacks sur la technique étaient négatifs).")
-elif diff == 0:
-    print("⚠️ Le coefficient n'a pas changé. Peut-être que le modèle n'a pas assez appris.")
-else:
-    print("❌ Le coefficient a augmenté, ce qui est incohérent avec des retours techniques négatifs.")
+if __name__ == "__main__":
+    main()

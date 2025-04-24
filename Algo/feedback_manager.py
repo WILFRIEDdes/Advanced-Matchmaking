@@ -1,7 +1,8 @@
 import json
 import os
 
-FEEDBACK_FILE = "historique_feedbacks.json"
+DATA_DIR = "data"
+FEEDBACK_FILE = os.path.join(DATA_DIR, "historique_feedbacks.json")
 
 def enregistrer_feedback(projet_id, coefficients, resultat, poids, cible):
     feedback = {
@@ -13,9 +14,9 @@ def enregistrer_feedback(projet_id, coefficients, resultat, poids, cible):
     }
     feedbacks = charger_feedbacks()
     feedbacks.append(feedback)
-    with open("historique_feedbacks.json", "w") as f:
+    os.makedirs(DATA_DIR, exist_ok=True)
+    with open(FEEDBACK_FILE, "w") as f:
         json.dump(feedbacks, f, indent=4)
-
 
 def charger_feedbacks():
     if not os.path.exists(FEEDBACK_FILE):

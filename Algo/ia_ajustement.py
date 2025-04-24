@@ -6,7 +6,9 @@ import os
 import json
 from datetime import datetime
 
-MODEL_FILE_TEMPLATE = "modele_{cible}.pkl"
+DATA_DIR = "data"
+MODEL_FILE_TEMPLATE = os.path.join(DATA_DIR, "modele_{cible}.pkl")
+
 
 COEFFS_CIBLES = ["notes", "competences_obligatoires", "experience", "competences_bonus"]
 
@@ -64,7 +66,8 @@ def ajuster_coefficients_par_question():
     return nouveaux_coeffs
 
 def sauver_coefficients(coeffs):
-    historique_path = "historique_coefficients.json"
+    historique_path = os.path.join(DATA_DIR, "historique_coefficients.json")
+    os.makedirs(DATA_DIR, exist_ok=True)
     if os.path.exists(historique_path):
         with open(historique_path, "r") as f:
             historique = json.load(f)
@@ -78,3 +81,4 @@ def sauver_coefficients(coeffs):
 
     with open(historique_path, "w") as f:
         json.dump(historique, f, indent=4)
+
