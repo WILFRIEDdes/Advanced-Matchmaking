@@ -142,3 +142,31 @@ class ProjetForm(forms.ModelForm):
 class CompetenceRequiseForm(forms.Form):
     competence = forms.ModelChoiceField(queryset=Competence.objects.all(), label='Compétence')
     niveau_requis = forms.CharField(max_length=13, label='Niveau requis')
+
+
+class SurveyForm(forms.Form):
+    q1 = forms.ChoiceField(
+        label="Êtes-vous globalement satisfait du projet ?",
+        choices=[(i, str(i)) for i in range(1, 6)],
+        widget=forms.RadioSelect
+    )
+    q2 = forms.ChoiceField(
+        label="L’équipe possédait-elle les compétences techniques nécessaires ?",
+        choices=[(i, str(i)) for i in range(1, 6)],
+        widget=forms.RadioSelect
+    )
+    q3 = forms.ChoiceField(
+        label="La communication dans l’équipe était-elle efficace ?",
+        choices=[(i, str(i)) for i in range(1, 6)],
+        widget=forms.RadioSelect
+    )
+    q4 = forms.ChoiceField(
+        label="Le projet a-t-il été bien géré dans le temps ?",
+        choices=[(i, str(i)) for i in range(1, 6)],
+        widget=forms.RadioSelect
+    )
+    q5 = forms.ChoiceField(
+        label="Vous êtes-vous senti à l’aise dans votre rôle ?",
+        choices=[(i, str(i)) for i in range(1, 6)],
+        widget=forms.RadioSelect
+    )

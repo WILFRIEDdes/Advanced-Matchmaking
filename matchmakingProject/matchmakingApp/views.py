@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import LoginForm, FirstLoginForm, ProjetForm, ProfilForm, UtilisateurCompetenceFormSet
+from .forms import LoginForm, FirstLoginForm, ProjetForm, ProfilForm, SurveyForm, UtilisateurCompetenceFormSet
 from .models import (
+    SurveyResponse,
     UtilisateurCompetence, 
     Disponibilite, 
     Utilisateur, 
@@ -243,8 +244,68 @@ def list_employees(request):
 @login_required
 @role_required(['manager'])
 def list_projects(request):
+    now = timezone.now().date()
     projets = Projet.objects.select_related('equipe').all()
-    return render(request, 'list_projects.html', {'projets': projets})
+
+    projets_avec_reponse = SurveyResponse.objects.filter(utilisateur=request.user).values_list('projet_id', flat=True)
+
+    projets_sans_equipe = []
+    projets_à_venir = []
+    projets_en_cours = []
+    projets_termines = []
+
+    for projet in projets:
+        if projet.equipe is None:
+            projets_sans_equipe.append(projet)
+        elif projet.date_debut <= now <= projet.date_fin:
+            projets_en_cours.append(projet)
+        elif projet.date_debut > now:
+            projets_à_venir.append(projet)
+        elif projet.date_fin < now:
+            projets_termines.append(projet)
+
+    return render(request, 'list_projects.html', {
+        'projets_sans_equipe': projets_sans_equipe,
+        'projets_en_cours': projets_en_cours,
+        'projets_à_venir': projets_à_venir,
+        'projets_termines': projets_termines,
+        'projets_avec_reponse': projets_avec_reponse,
+    })
+
+
+@login_required
+def redirect_to_survey(request, projet_id):
+    projet = get_object_or_404(Projet, pk=projet_id)
+    return redirect('survey', projet_id=projet_id)
+
+
+@login_required
+def survey_view(request, projet_id):
+    projet = get_object_or_404(Projet, pk=projet_id)
+
+    if request.method == 'POST':
+        form = SurveyForm(request.POST)
+        if form.is_valid():
+            if SurveyResponse.objects.filter(utilisateur=request.user, projet=projet).exists():
+                messages.warning(request, "Vous avez déjà répondu à ce questionnaire.")
+                return redirect('list_projects')
+            
+            SurveyResponse.objects.create(
+                q1=form.cleaned_data['q1'],
+                q2=form.cleaned_data['q2'],
+                q3=form.cleaned_data['q3'],
+                q4=form.cleaned_data['q4'],
+                q5=form.cleaned_data['q5'],
+                utilisateur=request.user,
+                projet=projet
+            )
+
+            messages.success(request, "Merci pour votre réponse au questionnaire !")
+            return redirect('list_projects')
+    else:
+        form = SurveyForm()
+    
+    return render(request, 'survey.html', {'form': form, 'projet': projet})
 
 
 @login_required
@@ -361,12 +422,6 @@ def create_project(request):
         "niveaux_competence": UtilisateurCompetence.niveaux,
         'competences_json': competences_json,
     })
-
-
-@login_required
-def calendar(request):
-    # code ici
-    return render(request, 'calendar.html')
 
 
 @login_required

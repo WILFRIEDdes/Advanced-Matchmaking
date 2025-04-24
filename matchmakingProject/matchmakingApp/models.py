@@ -172,6 +172,22 @@ class ProjetHoraires(models.Model):
         unique_together = (('projet', 'jour', 'heure_debut', 'heure_fin'),)
 
 
+class SurveyResponse(models.Model):
+    id = models.AutoField(primary_key=True)
+    q1 = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+    q2 = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+    q3 = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+    q4 = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+    q5 = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    utilisateur = models.ForeignKey('Utilisateur', on_delete=models.CASCADE, related_name='questionnaires_utilisateur', null=True, blank=True)
+    projet = models.ForeignKey('Projet', on_delete=models.CASCADE, related_name='questionnaires_projet', null=True, blank=True)
+    
+    class Meta:
+        managed = True
+        db_table = 'Questionnaire'
+
+
 class Equipe(models.Model):
     id = models.AutoField(primary_key=True)
     taille = models.IntegerField(blank=True, null=True)
