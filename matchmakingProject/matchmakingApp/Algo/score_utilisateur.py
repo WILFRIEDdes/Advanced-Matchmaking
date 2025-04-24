@@ -9,7 +9,7 @@ def calculer_score_utilisateur(projet: Projet, utilisateurs: list[Utilisateur], 
     :param coefficients: Dictionnaire des coefficients de pondération
     :return: utilisateurs: Liste d'objets Utilisateur
     """
-
+    print("Début du calcul des scores utilisateurs")
     for utilisateur in utilisateurs:
         score = 0
 

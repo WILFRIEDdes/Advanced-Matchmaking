@@ -13,35 +13,33 @@ import random
 def pipeline_creation_equipe(projet):
     print(f"\n==== 📋 Pipeline : Création d'équipe optimale pour le projet '{projet.nom}' ====\n")
 
-    competences_possibles = [Competence(i, f"Comp{i}") for i in range(1, 6)]
-    mobilites = ["presentiel", "distanciel", "hybride"]
-    jours_semaine = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"]
+    # competences_possibles = [Competence(i, f"Comp{i}") for i in range(1, 6)]
+    # mobilites = ["presentiel", "distanciel", "hybride"]
+    # jours_semaine = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"]
 
-    utilisateurs = []
-
-    for uid in range(1, 16):
-        competences = random.sample(competences_possibles, random.randint(1, 3))
-        for competence in competences:
-            competence.niveau = random.randint(1, 5)
-        disponibilites = {jour: {"debut": 7, "fin": 17} for jour in jours_semaine}
-        preferences = {}
-        experience = {"annees": random.randint(1, 10), "projets_realises": random.randint(1, 20)}
-        salaire_horaire = random.randint(15, 50)
-        historique_notes = [round(random.uniform(2.5, 5.0), 1) for _ in range(random.randint(3, 10))]
-        mobilite = random.choice(mobilites)
+    # for uid in range(1, 16):
+    #     competences = random.sample(competences_possibles, random.randint(1, 3))
+    #     for competence in competences:
+    #         competence.niveau = random.randint(1, 5)
+    #     disponibilites = {jour: {"debut": 7, "fin": 17} for jour in jours_semaine}
+    #     preferences = {}
+    #     experience = {"annees": random.randint(1, 10), "projets_realises": random.randint(1, 20)}
+    #     salaire_horaire = random.randint(15, 50)
+    #     historique_notes = [round(random.uniform(2.5, 5.0), 1) for _ in range(random.randint(3, 10))]
+    #     mobilite = random.choice(mobilites)
         
-        utilisateur = Utilisateur(uid, competences, disponibilites, preferences, experience, salaire_horaire, historique_notes, mobilite)
-        utilisateurs.append(utilisateur) 
+    #     utilisateur = Utilisateur(uid, competences, disponibilites, preferences, experience, salaire_horaire, historique_notes, mobilite)
+    #     utilisateurs.append(utilisateur) 
 
-    print(" -------------- Utilisateurs générés --------------")
+    # print(" -------------- Utilisateurs générés --------------")
+    # for utilisateur in utilisateurs:
+    #     print(f"Utilisateur {utilisateur.id}: {[competence.nom for competence in utilisateur.competences]}, Mobilité: {utilisateur.mobilite}, Salaire horaire: {utilisateur.salaire_horaire}")
+    
+    
+    utilisateurs = obtenir_utilisateurs_depuis_projet(projet)
+    print("-------------- Utilisateurs pour le projet --------------")
     for utilisateur in utilisateurs:
-        print(f"Utilisateur {utilisateur.id}: {[competence.nom for competence in utilisateur.competences]}, Mobilité: {utilisateur.mobilite}, Salaire horaire: {utilisateur.salaire_horaire}")
-    
-    
-    #utilisateurs = obtenir_utilisateurs_depuis_projet(projet)
-    #print("-------------- Utilisateurs pour le projet --------------")
-    #for utilisateur in utilisateurs:
-    #    print(f"Utilisateur {utilisateur.id}: {[competence.nom for competence in utilisateur.competences]}, Mobilité: {utilisateur.mobilite}, Salaire horaire: {utilisateur.salaire_horaire}")
+       print(f"Utilisateur {utilisateur.id}: {[(competence.nom,competence.niveau) for competence in utilisateur.competences]}, Mobilité: {utilisateur.mobilite}, Salaire horaire: {utilisateur.salaire_horaire}")
     
 
     # Étape 1 : Calcul des scores des utilisateurs
@@ -54,6 +52,13 @@ def pipeline_creation_equipe(projet):
 
     # Étape 2 : Formation d'équipes initiales
     equipes_initiales = former_equipes(projet, utilisateurs_scores, max_utilisateurs=10)
+
+    # 🔍 Vérification : au moins une équipe valide ?
+    equipe_valide = any(len(equipe.membres) >= projet.taille_equipe["min"] for equipe in equipes_initiales)
+    if not equipe_valide:
+        print("❌ Pas assez de membres disponibles pour créer une équipe respectant les critères du projet.")
+        return None
+    
     print(f"✅ {len(equipes_initiales)} équipes initiales générées.")
     print("-------------- Équipes initiales formées --------------")
     for equipe_initiale in equipes_initiales:

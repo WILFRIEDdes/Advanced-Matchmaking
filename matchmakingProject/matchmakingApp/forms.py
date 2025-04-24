@@ -26,7 +26,7 @@ class FirstLoginForm(forms.Form):
     mobilite = forms.ChoiceField(
         label="Mobilité ",
         choices=[
-            ('présentiel', 'Présentiel'),
+            ('presentiel', 'Presentiel'),
             ('distanciel', 'Distanciel'),
             ('mixte', 'Mixte')
         ],
@@ -71,12 +71,12 @@ class ProfilForm(forms.ModelForm):
     mobilite = forms.ChoiceField(
         label="Mobilité",
         choices=[
-            ('présentiel', 'Présentiel'),
+            ('presentiel', 'Presentiel'),
             ('distanciel', 'Distanciel'),
             ('mixte', 'Mixte')
         ],
         widget=forms.Select(attrs={
-            "class": "w-full p-2 border rounded-lg cursor-pointer"
+            "class": "w-1/2 p-2 border rounded-lg cursor-pointer"
         })
     )
 

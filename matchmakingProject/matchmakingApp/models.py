@@ -43,7 +43,7 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
     salaire_horaire = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     moyenne_notes = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
     historique_notes = models.JSONField(blank=True, null=True)
-    mobilite = models.CharField(max_length=20, choices=[('présentiel', 'Présentiel'), ('distanciel', 'Distanciel'), ('mixte', 'Mixte')], blank=True, null=True)
+    mobilite = models.CharField(max_length=20, choices=[('presentiel', 'Presentiel'), ('distanciel', 'Distanciel'), ('mixte', 'Mixte')], blank=True, null=True)
     score_projet = models.IntegerField(blank=True, null=True)
 
     is_active = models.BooleanField(default=True)
@@ -59,55 +59,6 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
         db_table = 'Utilisateur'
 
 
-class Competence(models.Model):
-    nom = models.CharField(unique=True, max_length=100)
-
-    def __str__(self):
-        return self.nom
-
-    class Meta:
-        managed = True
-        db_table = 'Competence'
-
-
-class Projet(models.Model):
-    nom = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    date_debut = models.DateField()
-    date_fin = models.DateField()
-    equipe = models.OneToOneField('Equipe', on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return self.nom
-
-    class Meta:
-        managed = True
-        db_table = 'Projet'
-
-
-class ProjetCompetenceRequise(models.Model):
-    projet = models.ForeignKey('Projet', on_delete=models.CASCADE)
-    competence = models.ForeignKey('Competence', on_delete=models.CASCADE)
-    niveau_requis = models.CharField(max_length=13, blank=True, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'Projet_CompetenceRequise'
-        unique_together = (('projet', 'competence'),)
-
-
-class Equipe(models.Model):
-    id = models.AutoField(primary_key=True)
-    taille = models.IntegerField(blank=True, null=True)
-    budget_total = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
-    heures_homme = models.IntegerField(blank=True, null=True)
-    score_global = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'Equipe'
-
-
 class Disponibilite(models.Model):
     id = models.AutoField(primary_key=True)
     utilisateur = models.ForeignKey('Utilisateur', on_delete=models.CASCADE)
@@ -119,6 +70,140 @@ class Disponibilite(models.Model):
         managed = True
         db_table = 'Disponibilite'
         unique_together = ('utilisateur', 'jour', 'heure_debut', 'heure_fin')
+
+
+class Competence(models.Model):
+    nom = models.CharField(unique=True, max_length=100)
+
+    def __str__(self):
+        return self.nom
+
+    class Meta:
+        managed = True
+        db_table = 'Competence'
+
+
+class UtilisateurCompetence(models.Model):
+    niveaux = [
+        ('Débutant', 'Débutant'),
+        ('Novice', 'Novice'),
+        ('Intermédiaire', 'Intermédiaire'),
+        ('Avancé', 'Avancé'),
+        ('Expert', 'Expert'),
+    ]
+
+    id = models.AutoField(primary_key=True)
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+    competence = models.ForeignKey(Competence, on_delete=models.CASCADE)
+    niveau = models.CharField(max_length=50, choices=niveaux, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Utilisateur_Competence'
+        unique_together = (('utilisateur', 'competence'),)
+
+
+class Projet(models.Model):
+    nom = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    date_debut = models.DateField()
+    date_fin = models.DateField()
+    taille_equipe_min = models.IntegerField(blank=True, null=True)
+    taille_equipe_max = models.IntegerField(blank=True, null=True)
+    budget = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+    mobilite = models.CharField(max_length=20, choices=[('presentiel', 'Presentiel'), ('distanciel', 'Distanciel'), ('mixte', 'Mixte')], blank=True, null=True)
+    equipe = models.OneToOneField('Equipe', on_delete=models.SET_NULL, null=True, blank=True)
+    
+
+    def __str__(self):
+        return self.nom
+
+    class Meta:
+        managed = True
+        db_table = 'Projet'
+
+
+class ProjetExperienceRequise(models.Model):
+    projet = models.ForeignKey('Projet', on_delete=models.CASCADE)
+    annees_experience = models.IntegerField(blank=True, null=True)
+    projets_realises = models.IntegerField(blank=True, null=True)
+    nombre_personnes = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Projet_ExperienceRequise'
+        unique_together = (('projet', 'annees_experience', 'projets_realises', 'nombre_personnes'),)
+
+
+class ProjetCompetenceRequise(models.Model):
+    projet = models.ForeignKey('Projet', on_delete=models.CASCADE)
+    competence = models.ForeignKey('Competence', on_delete=models.CASCADE)
+    niveau_requis = models.CharField(max_length=13, blank=True, null=True)
+    nombre_personnes = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Projet_CompetenceRequise'
+        unique_together = (('projet', 'competence'),)
+
+
+class ProjetCompetenceBonus(models.Model):
+    projet = models.ForeignKey('Projet', on_delete=models.CASCADE)
+    competence = models.ForeignKey(Competence, on_delete=models.CASCADE)
+    niveau_requis = models.CharField(max_length=13, blank=True, null=True)
+    nombre_personnes = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Projet_CompetenceBonus'
+        unique_together = (('projet', 'competence'),)
+
+
+class ProjetHoraires(models.Model):
+    id = models.AutoField(primary_key=True)
+    projet = models.ForeignKey('Projet', on_delete=models.CASCADE)
+    jour = models.CharField(max_length=8)
+    heure_debut = models.TimeField(blank=True, null=True)
+    heure_fin = models.TimeField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Projet_Horaires'
+        unique_together = (('projet', 'jour', 'heure_debut', 'heure_fin'),)
+
+
+class Equipe(models.Model):
+    id = models.AutoField(primary_key=True)
+    taille = models.IntegerField(blank=True, null=True)
+    budget_total = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+    score_global = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Equipe'
+
+
+class EquipeMembre(models.Model):
+    id = models.AutoField(primary_key=True)
+    equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
+    utilisateur = models.ForeignKey('Utilisateur', on_delete=models.CASCADE)
+
+    class Meta:
+        managed = True
+        db_table = 'Equipe_Membre'
+        unique_together = (('equipe', 'utilisateur'),)
+
+
+class MobiliteEquipe(models.Model):
+    id = models.AutoField(primary_key=True)
+    equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
+    presentiel = models.IntegerField(blank=True, null=True)
+    distanciel = models.IntegerField(blank=True, null=True)
+    hybride = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Mobilite_Equipe'
 
 
 class PreferenceUtilisateur(models.Model):
@@ -143,69 +228,3 @@ class PreferenceCompetence(models.Model):
         managed = True
         db_table = 'Preference_Competence'
         unique_together = (('utilisateur', 'competence'),)
-
-
-class UtilisateurCompetence(models.Model):
-    niveaux = [
-        ('Débutant', 'Débutant'),
-        ('Novice', 'Novice'),
-        ('Intermédiaire', 'Intermédiaire'),
-        ('Avancé', 'Avancé'),
-        ('Expert', 'Expert'),
-    ]
-
-    id = models.AutoField(primary_key=True)
-    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
-    competence = models.ForeignKey(Competence, on_delete=models.CASCADE)
-    niveau = models.CharField(max_length=50, choices=niveaux, blank=True, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'Utilisateur_Competence'
-        unique_together = (('utilisateur', 'competence'),)
-
-
-class EquipeMembre(models.Model):
-    id = models.AutoField(primary_key=True)
-    equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
-    utilisateur = models.ForeignKey('Utilisateur', on_delete=models.CASCADE)
-
-    class Meta:
-        managed = True
-        db_table = 'Equipe_Membre'
-        unique_together = (('equipe', 'utilisateur'),)
-
-
-class EquipeCompetencebonus(models.Model):
-    id = models.AutoField(primary_key=True)
-    equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
-    competence = models.ForeignKey(Competence, on_delete=models.CASCADE)
-
-    class Meta:
-        managed = True
-        db_table = 'Equipe_CompetenceBonus'
-        unique_together = (('equipe', 'competence'),)
-
-
-class EquipeCompetencecouvrante(models.Model):
-    id = models.AutoField(primary_key=True)
-    equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
-    competence = models.ForeignKey(Competence, on_delete=models.CASCADE)
-    niveau_requis = models.CharField(max_length=13, blank=True, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'Equipe_CompetenceCouvrante'
-        unique_together = (('equipe', 'competence'),)
-
-
-class MobiliteEquipe(models.Model):
-    id = models.AutoField(primary_key=True)
-    equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
-    presentiel = models.IntegerField(blank=True, null=True)
-    distanciel = models.IntegerField(blank=True, null=True)
-    hybride = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'Mobilite_Equipe'
