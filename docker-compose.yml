@@ -46,18 +46,18 @@ services:
       - db
 
 
-  web:
-    #build: .
-    image: advanced-matchmaking
-    container_name: django_app
-    restart: always
-    networks : 
-      - default
-    ports:
-      - "8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
+  # web:
+  #   #build: .
+  #   image: advanced-matchmaking
+  #   container_name: django_app
+  #   restart: always
+  #   networks : 
+  #     - default
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
 
 volumes:
   mysql_data:
