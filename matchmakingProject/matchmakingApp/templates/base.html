@@ -105,98 +105,54 @@
         <a href="{% url 'index' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="{% static 'images/logoentreprise.png' %}" class="h-8" alt="TeamBuilding Logo">
         </a>
-        {% if user.is_authenticated %}
-        <div class="flex items-center justify-between w-full md:w-auto md:order-1" id="navbar-sticky">
+        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+        </div>
+        <div class="flex items-center w-full justify-center md:w-auto md:order-1" id="navbar-sticky">
+            {% if user.is_authenticated %}
             <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white md:justify-center">
                 {% if user.role == 'manager' %}
-                    <li>
-                        <a href="{% url 'index' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Accueil</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'list_projects' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Projets</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'list_employees' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Employés</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'create_project' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Créer un projet</a>
-                    </li>
+                    <li><a href="{% url 'index' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Accueil</a></li>
+                    <li><a href="{% url 'list_projects' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Projets</a></li>
+                    <li><a href="{% url 'list_employees' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Employés</a></li>
+                    <li><a href="{% url 'create_project' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Créer un projet</a></li>
                 {% elif user.role == 'employe' %}
-                    <li>
-                        <a href="{% url 'list_projects' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Mes Projets</a>
-                    </li>
+                    <li><a href="{% url 'list_projects' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Mes Projets</a></li>
                 {% endif %}
-                <li>
-                    <a href="{% url 'profile' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Mon Profil</a>
-                </li>
+                <li><a href="{% url 'profile' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Mon Profil</a></li>
             </ul>
-            <form method="post" action="{% url 'logout' %}" class="ml-auto">
+            
+            <form method="post" action="{% url 'logout' %}" class="absolute right-10">
                 {% csrf_token %}
-                <button type="submit" class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-4 py-2 text-center">Déconnexion</button>
+                <button type="submit" class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-4 py-2 text-center">
+                    Déconnexion
+                </button>
             </form>
-        </div>
-        
-        {% else %}
-            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white md:justify-center">
-                    <li>
-                        <a href="{% url 'index' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Accueil</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'projet' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Projet</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'equipe' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Equipe</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'objectif' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Objectif</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'contact' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Contact</a>
-                    </li>
+            
+
+            {% else %}
+            <div class="flex items-center justify-start w-auto md:w-auto md:order-1 " id="navbar-sticky">
+                <ul class="flex flex-col p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white md:justify-start">
+                    <li><a href="{% url 'index' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Accueil</a></li>
+                    <li><a href="{% url 'projet' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Projet</a></li>
+                    <li><a href="{% url 'equipe' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Equipe</a></li>
+                    <li><a href="{% url 'objectif' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Objectif</a></li>
+                    <li><a href="{% url 'contact' %}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Contact</a></li>
                 </ul>
             </div>
-            <a href="{% url 'login' %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Se connecter</a>
-        {% endif %}
+
+            <a href="{% url 'login' %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center absolute right-10">
+                Se connecter
+            </a>
+            {% endif %}
+        </div>
     </div>
 </nav>
 
-
-    <!-- Navbar -->
-    <!-- <nav class="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 shadow-md rounded-b-lg px-6 py-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="{% url 'index' %}" class="text-white text-2xl font-extrabold tracking-wide">Mon Site</a>
-            <div class="flex items-center space-x-6">
-                {% if user.is_authenticated %}
-                    {% if user.role == 'manager' %}
-                        <a href="{% url 'list_projects' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Projets</a>
-                        <a href="{% url 'list_employees' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Employés</a>
-                        <a href="{% url 'create_project' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Créer un projet</a>
-                        <a href="{% url 'calendar' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Calendrier</a>
-                        <a href="{% url 'profile' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mon Profil</a>
-                    {% elif user.role == 'employe' %}
-                        <a href="{% url 'list_projects' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mes Projets</a>
-                        <a href="{% url 'calendar' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Calendrier</a>
-                        <a href="{% url 'profile' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Mon Profil</a>
-                    {% endif %}
-                    <span class="text-white font-semibold">Bienvenue, {{ user.prenom }} {{ user.nom }} !</span>
-                    <form method="post" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Déconnexion</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'login' %}" class="text-white font-medium transition duration-300 border-b-2 border-transparent hover:border-white">Connexion</a>
-                {% endif %}
-            </div>
-        </div>
-    </nav> -->
-    
-
-
-    <!-- Contenu principal -->
-    <div class="container mx-auto p-8">
-        {% block content %}{% endblock %}
-    </div>
+<!-- Contenu principal -->
+<div class="container mx-auto p-8">
+    {% block content %}{% endblock %}
+</div>
 
 </body>
 </html>
