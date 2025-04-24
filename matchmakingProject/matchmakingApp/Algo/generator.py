@@ -61,7 +61,8 @@ def generate_users(n, starting_id):
 def assign_competences(users, competences):
     user_competences = []
     for user in users:
-        nb = random.randint(1, len(competences))
+        max_comp = min(15, len(competences))
+        nb = random.randint(3, max_comp)
         selected = random.sample(competences, nb)
         for comp in selected:
             niveau = random.choice(["Débutant", "Novice", "Intermédiaire", "Avancé", "Expert"])
@@ -93,10 +94,9 @@ def generate_and_insert_users(n):
     user_competences = assign_competences(users, competences)
     disponibilites = generate_disponibilites(users)
     
-    print("Utilisateurs:", users, "\n")
-    print("Compétences:", competences, "\n")
-    print("Utilisateur_Compétences:", user_competences, "\n")
-    print("Disponibilités:", disponibilites, "\n")
+    print(f"{len(users)} utilisateurs générés.")
+    print(f"{len(user_competences)} compétences assignées.")
+    print(f"{len(disponibilites)} disponibilités générées.")
     # delete_users(users) 
-    insert_users(users, disponibilites)
+    insert_users(users, disponibilites, user_competences)
     print("Utilisateurs insérés avec succès !")

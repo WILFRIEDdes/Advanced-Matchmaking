@@ -10,7 +10,7 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-def insert_users(users, disponibilites):
+def insert_users(users, disponibilites, user_competences):
     query_utilisateur = """
         INSERT INTO Utilisateur (
             id, password, last_login, is_superuser, nom, prenom, mail, role,
@@ -29,16 +29,30 @@ def insert_users(users, disponibilites):
         VALUES (%s, %s, %s, %s)
     """
 
+    query_competences = """
+        INSERT IGNORE INTO Utilisateur_Competence (utilisateur_id, competence_id, niveau)
+        VALUES (%s, %s, %s)
+    """
+
+    # Insertion des utilisateurs
     for user in users:
-        # Insertion dans Utilisateur
         cursor.execute(query_utilisateur, user)
 
+    # Insertion des disponibilités
     for dispo in disponibilites: 
         cursor.execute(query_dispo, (
             dispo["utilisateur_id"], dispo["jour"], dispo["heure_debut"], dispo["heure_fin"]
         ))
 
+    # Insertion des compétences utilisateur, ligne par ligne
+    for comp in user_competences:
+        utilisateur_id, competence_id, niveau = comp
+        cursor.execute(query_competences, (utilisateur_id, competence_id, niveau))
+
     conn.commit()
+
+    cursor.close()
+    conn.close()
 
 def delete_users(users):
     query = """

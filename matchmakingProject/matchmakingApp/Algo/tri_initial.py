@@ -128,7 +128,9 @@ def obtenir_utilisateurs_depuis_projet(projet):
 
         # Notes et mobilité
         historique_notes = u.historique_notes or []
-        mobilite = u.mobilite
+        
+        # Conversion de la mobilité "mixte" → "hybride"
+        mobilite = "hybride" if u.mobilite == "mixte" else u.mobilite
 
         utilisateur = AlgoUtilisateur(
             id=u.id,
