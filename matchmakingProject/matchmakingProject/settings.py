@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'matchmakingDB',
         'USER': 'user',
         'PASSWORD': 'password',
-        'HOST': '172.19.0.2',  # ou l'IP du conteneur MySQL
+        'HOST': 'localhost',  # ou l'IP du conteneur MySQL
         'PORT': '3306',
     }
 }
@@ -122,6 +122,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+LOGIN_REDIRECT_URL = "/"  # Change selon ton besoin
+LOGOUT_REDIRECT_URL = "/login/"  # Redirige après la déconnexion
 
 
 # Internationalization

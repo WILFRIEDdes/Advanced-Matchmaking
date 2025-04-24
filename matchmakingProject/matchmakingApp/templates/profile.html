@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% load custom_filters %}
+
+{% block content %}
+
+{% if messages %}
+  <div class="p-4">
+    {% for message in messages %}
+      <div class="mb-2 p-3 rounded shadow
+        {% if message.tags == 'success' %}
+          bg-green-100 text-green-800
+        {% elif message.tags == 'error' %}
+          bg-red-100 text-red-800
+        {% else %}
+          bg-gray-100 text-gray-800
+        {% endif %}
+      ">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-lg">
+    <h2 class="text-2xl font-bold mb-6">Mon Profil</h2>
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <div>
+            <label class="block font-semibold mb-1">{{ form.mobilite.label }}</label>
+            {{ form.mobilite }}
+        </div>
+
+        <div>
+            <label class="mb-1 font-semibold">{{ form.competences.label_tag }}</label>
+            <div id="compets-container" class="space-y-4">
+                {% for comp in form.fields.competences.queryset %}
+                    {% if comp.id in form.competence_niveaux %}
+                        <div class="compet-group flex flex-col sm:flex-row sm:items-center gap-2">
+                            <select name="competence_id" class="border p-2 rounded w-1/2">
+                                <option disabled value="">-- Choisir une compétence --</option>
+                                {% for c in form.fields.competences.queryset %}
+                                    <option value="{{ c.id }}" {% if c.id == comp.id %}selected{% endif %}>{{ c.nom }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="competence_niveau" class="border p-2 rounded w-1/2">
+                                {% for niveau in niveaux_competence %}
+                                    <option value="{{ niveau.0 }}" {% if form.competence_niveaux|get_item:comp.id == niveau.0 %}selected{% endif %}>{{ niveau.1 }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="button" class="remove-compet text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+            {% for error in form.competences.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+            {% endfor %}
+            
+            <input type="hidden" name="total_competences" id="total_competences" value="0">
+            <button type="button" id="addCompetBtn" class="mt-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl disabled:bg-green-300 disabled:cursor-not-allowed disabled:opacity-60">
+                Ajouter une compétence
+            </button>
+        </div>
+
+        <div>
+            <label class="block font-semibold mb-1">Disponibilités</label>
+            <div id="dispos-container" class="space-y-4">
+                {% for dispo in form.disponibilites %}
+                    <div class="dispo-group flex flex-col sm:flex-row sm:items-center gap-2">
+                        <select name="jour" class="border rounded px-3 py-2 w-full sm:w-auto">
+                            <option disabled value="">-- Choisir un jour --</option>
+                            <option value="Lundi" {% if dispo.jour == "Lundi" %}selected{% endif %}>Lundi</option>
+                            <option value="Mardi" {% if dispo.jour == "Mardi" %}selected{% endif %}>Mardi</option>
+                            <option value="Mercredi" {% if dispo.jour == "Mercredi" %}selected{% endif %}>Mercredi</option>
+                            <option value="Jeudi" {% if dispo.jour == "Jeudi" %}selected{% endif %}>Jeudi</option>
+                            <option value="Vendredi" {% if dispo.jour == "Vendredi" %}selected{% endif %}>Vendredi</option>
+                        </select>
+                        <input type="time" name="heure_debut" value="{{ dispo.heure_debut|time:'H:i' }}" class="border rounded px-3 py-2 w-full sm:w-auto">
+                        <input type="time" name="heure_fin" value="{{ dispo.heure_fin|time:'H:i' }}" class="border rounded px-3 py-2 w-full sm:w-auto">
+                        <button type="button" class="remove-dispo text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <button type="button" id="addDispoBtn" class="mt-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl disabled:bg-green-300 disabled:cursor-not-allowed disabled:opacity-60">
+                Ajouter une disponibilité
+            </button>
+            
+        </div>
+
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-xl">
+            Enregistrer les modifications
+        </button>
+    </form>
+
+    <hr class="my-6">
+
+    <button id="editPasswordBtn" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-xl">
+        Modifier mon mot de passe
+    </button>
+</div>
+
+<div id="passwordModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg w-full max-w-md space-y-4">
+        <h3 class="text-lg font-bold">Changer le mot de passe</h3>
+        <form method="post" action="{% url 'change_password' %}">
+            {% csrf_token %}
+            <input type="password" name="old_password" placeholder="Ancien mot de passe" class="w-full border rounded px-3 py-2 mb-2">
+            <input type="password" name="new_password" placeholder="Nouveau mot de passe" class="w-full border rounded px-3 py-2 mb-2">
+            <input type="password" name="confirm_password" placeholder="Confirmer le nouveau mot de passe" class="w-full border rounded px-3 py-2 mb-4">
+
+            <div class="flex justify-between">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Valider</button>
+                <button type="button" onclick="document.getElementById('passwordModal').classList.add('hidden')" class="bg-gray-300 px-4 py-2 rounded">Annuler</button>
+            </div>
+        </form>
+    </div>
+</div>
+    <script>    
+        const competences = JSON.parse('{{ competences_json|escapejs }}');
+        const competencesCount = competences.length;
+
+        function updateCompetenceOptions() {
+            const allSelects = document.querySelectorAll('select[name="competence_id"]');
+            const selectedValues = Array.from(allSelects).map(s => s.value);
+
+            allSelects.forEach(select => {
+                const currentValue = select.value;
+                Array.from(select.options).forEach(option => {
+                    if (option.value !== currentValue && selectedValues.includes(option.value)) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = '';
+                    }
+                });
+            });
+            
+            const addCompetBtn = document.getElementById('addCompetBtn');
+            if (selectedValues.length >= competencesCount) {
+                addCompetBtn.disabled = true;
+            } else {
+                addCompetBtn.disabled = false;
+            }
+        }
+
+        function refreshCompetenceSelects() {
+            updateCompetenceOptions();
+
+            document.querySelectorAll('select[name="competence_id"]').forEach(select => {
+                select.removeEventListener('change', updateCompetenceOptions); // Évite doublon
+                select.addEventListener('change', updateCompetenceOptions);
+            });
+        }
+
+        document.getElementById('addCompetBtn').addEventListener('click', () => {
+            const container = document.getElementById('compets-container');
+            const div = document.createElement('div');
+            div.classList = 'compet-group flex flex-col sm:flex-row sm:items-center gap-2';
+            div.innerHTML = `
+                <select name="competence_id" class="border p-2 rounded w-1/2">
+                    <option disabled selected value="">-- Choisir une compétence --</option>
+                    {% for c in competences %}
+                        <option value="{{ c.id }}">{{ c.nom }}</option>
+                    {% endfor %}
+                </select>
+                <select name="competence_niveau" class="border p-2 rounded w-1/2">
+                    {% for niveau in niveaux_competence %}
+                        <option value="{{ niveau.0 }}">{{ niveau.0 }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" class="remove-compet text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+            `;
+            container.appendChild(div);
+ 
+            refreshCompetenceSelects();
+        });
+        
+        const joursDisponibles = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+
+        function updateDisponibiliteOptions() {
+            const allSelects = document.querySelectorAll('select[name="jour"]');
+            const selectedValues = Array.from(allSelects).map(s => s.value);
+
+            allSelects.forEach(select => {
+                const currentValue = select.value;
+                Array.from(select.options).forEach(option => {
+                    if (option.value !== currentValue && selectedValues.includes(option.value)) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = '';
+                    }
+                });
+            });
+
+            const addDispoBtn = document.getElementById('addDispoBtn');
+            if (selectedValues.length >= joursDisponibles.length) {
+                addDispoBtn.disabled = true;
+            } else {
+                addDispoBtn.disabled = false;
+            }
+        }
+
+        function refreshDisponibiliteSelects() {
+            updateDisponibiliteOptions();
+
+            document.querySelectorAll('select[name="jour"]').forEach(select => {
+                select.removeEventListener('change', updateDisponibiliteOptions);
+                select.addEventListener('change', updateDisponibiliteOptions);
+            });
+        }
+
+        document.getElementById('addDispoBtn').addEventListener('click', () => {
+            const container = document.getElementById('dispos-container');
+            const div = document.createElement('div');
+            div.classList = 'dispo-group flex flex-col sm:flex-row sm:items-center gap-2';
+            div.innerHTML = `
+                <select name="jour" class="border rounded px-3 py-2 w-full sm:w-auto">
+                    <option disabled selected value="">-- Choisir un jour --</option>
+                    <option value="Lundi">Lundi</option>
+                    <option value="Mardi">Mardi</option>
+                    <option value="Mercredi">Mercredi</option>
+                    <option value="Jeudi">Jeudi</option>
+                    <option value="Vendredi">Vendredi</option>
+                </select>
+                <input type="time" name="heure_debut" class="border rounded px-3 py-2 w-full sm:w-auto">
+                <input type="time" name="heure_fin" class="border rounded px-3 py-2 w-full sm:w-auto">
+                <button type="button" class="remove-dispo text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+            `;
+            container.appendChild(div);
+
+            refreshDisponibiliteSelects();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            refreshCompetenceSelects();
+            refreshDisponibiliteSelects();
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-compet')) {
+                e.target.parentElement.remove();
+                refreshCompetenceSelects();
+            }
+
+            if (e.target.classList.contains('remove-dispo')) {
+                const div = e.target.parentElement;
+                const jourSupprime = div.querySelector('select[name="jour"]').value;
+                div.remove();
+
+                refreshDisponibiliteSelects();
+            }
+        });
+
+        document.getElementById('editPasswordBtn').addEventListener('click', () => {
+            document.getElementById('passwordModal').classList.remove('hidden');
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Test{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded">
+    <h2 class="text-2xl font-bold text-center">Création équipe</h2>
+    
+    <form method="post" action="{% url 'demander_equipe' %}" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 my-4 rounded">
+            Demander une équipe
+        </button>
+
+        {% if equipe %}
+        <div class="mt-10 p-6 bg-green-100 rounded shadow-md max-w-2xl mx-auto">
+            <h2 class="text-xl font-bold mb-4">Équipe générée pour le projet "{{ equipe.projet.nom }}"</h2>
+
+            <p><strong>Nombre de membres :</strong> {{ equipe.taille }}</p>
+            <p><strong>Budget total :</strong> {{ equipe.budget_total }} €</p>
+            <p><strong>Score global :</strong> {{ equipe.score_global }}</p>
+
+            <h3 class="font-semibold mt-4">Membres :</h3>
+            <ul class="list-disc ml-6">
+                {% for membre in equipe.membres %}
+                    <li>
+                        ID: {{ membre.id }} - Salaire horaire: {{ membre.salaire_horaire }} €
+                        <ul class="ml-4 text-sm">
+                            <li><strong>Mobilité:</strong> {{ membre.mobilite }}</li>
+                            <li><strong>Expérience:</strong> {{ membre.experience.annees }} ans / {{ membre.experience.projets_realises }} projets</li>
+                            <li><strong>Compétences:</strong>
+                                <ul class="ml-4">
+                                    {% for comp in membre.competences %}
+                                        <li>ID: {{ comp.id }}, Niveau: {{ comp.niveau }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if error %}
+          <p style="color:red">{{ error }}</p>
+        {% endif %}
+    </form>
+</div>
+
+<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded">
+    <h2 class="text-2xl font-bold text-center">Ajustement coefficients</h2>
+    
+    <form method="post" action="{% url 'ajuster_coefficients' %}" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 my-4 rounded">
+            Ajuster les coefficients
+        </button>
+        {% if error %}
+          <p style="color:red">{{ error }}</p>
+        {% endif %}
+    </form>
+
+    {% if nouveaux_coeffs %}
+    <div class="mt-6">
+        <h3 class="text-lg font-semibold">Nouveaux coefficients :</h3>
+        <ul class="list-disc list-inside">
+            {% for key, value in nouveaux_coeffs.items %}
+                <li><strong>{{ key }}</strong> : {{ value }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    {% if anciens_coeffs %}
+    <div class="mt-6">
+        <h3 class="text-lg font-semibold">Anciens coefficients :</h3>
+        <ul class="list-disc list-inside">
+            {% for key, value in anciens_coeffs.items %}
+                <li><strong>{{ key }}</strong> : {{ value }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

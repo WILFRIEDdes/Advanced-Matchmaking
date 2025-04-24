@@ -41,3 +41,6 @@ Thumbs.db
 # virtual environnement #
 #########################
 venv/
+env/
+
+mysql-init/

@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Créer un projet{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-xl">
+    <h1 class="text-2xl font-bold mb-6">Créer un nouveau projet</h1>
+
+    <form method="post" class="space-y-6 bg-white p-8 rounded shadow-md">
+        {% csrf_token %}
+
+        <div>
+            <label class="block mb-1 font-semibold" for="id_nom">Nom du projet</label>
+            <input type="text" name="nom" id="id_nom" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+    
+        <div>
+            <label class="block mb-1 font-semibold" for="id_description">Description</label>
+            <textarea name="description" id="id_description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+        </div>
+
+        <div>
+            <label class="block mb-1 font-semibold" for="id_mobilite">Mobilité</label>
+            <select name="mobilite" id="id_mobilite" class="border p-2 rounded w-1/2">
+                <option value="presentiel">Presentiel</option>
+                <option value="distanciel">Distanciel</option>
+                <option value="mixte">Mixte</option>
+            </select>
+        </div>
+
+        <div class="w-1/2">
+            <label class="block mb-1 font-semibold" for="id_budget_max">Budget maximal (€)</label>
+            <input type="number" name="budget_max" id="id_budget_max" min="0" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+
+        <div class="w-1/2">
+            <label class="block mb-1 font-semibold" for="id_taille_equipe_min">Taille de l'équipe min</label>
+            <input type="number" name="taille_equipe_min" id="id_taille_equipe_min" min="1" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+
+        <div class="w-1/2">
+            <label class="block mb-1 font-semibold" for="id_taille_equipe_max">Taille de l'équipe max</label>
+            <input type="number" name="taille_equipe_max" id="id_taille_equipe_max" min="1" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+    
+        <div class="flex space-x-6">
+            <div class="w-1/2">
+                <label class="block mb-1 font-semibold" for="id_date_debut">Date de début</label>
+                <input type="date" name="date_debut" id="id_date_debut" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+            <div class="w-1/2">
+                <label class="block mb-1 font-semibold" for="id_date_fin">Date de fin</label>
+                <input type="date" name="date_fin" id="id_date_fin" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+        </div>
+
+        <div id="experience-container" class="space-y-2">
+            <label class="block font-semibold mb-1">Expériences requises</label>
+        </div>
+        <input type="hidden" name="total_experience" id="total_experience" value="0">
+        <button type="button" id="addExperienceBtn" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Ajouter une expérience</button>        
+
+        <div class="mt-6">
+            <h2 class="text-lg font-semibold mb-2">Compétences requises</h2>
+            <div id="compets-container" class="space-y-4">
+            </div>
+            <input type="hidden" name="total_competences" id="total_competences" value="0">
+            <button type="button" id="addCompetBtn" class="mt-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl disabled:bg-green-300 disabled:cursor-not-allowed disabled:opacity-60">
+                Ajouter une compétence requise
+            </button>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-lg font-semibold mb-2">Compétences bonus</h2>
+            <div id="competsbonus-container" class="space-y-4">
+            </div>
+            <input type="hidden" name="total_competences" id="total_competences" value="0">
+            <button type="button" id="addCompetBonusBtn" class="mt-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl disabled:bg-green-300 disabled:cursor-not-allowed disabled:opacity-60">
+                Ajouter une compétence bonus
+            </button>
+        </div>
+
+        <div>
+            <label class="block font-semibold mb-1">Horaires</label>
+            <div id="horaires-container" class="space-y-4">
+            </div>
+            <button type="button" id="addHoraireBtn" class="mt-4 w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-xl disabled:bg-green-300 disabled:cursor-not-allowed disabled:opacity-60">
+                Ajouter un horaire
+            </button>
+        </div>
+
+        <div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 font-semibold">
+                Créer le projet
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const competences = JSON.parse('{{ competences_json|escapejs }}');
+    const competencesCount = competences.length;
+    
+    function updateCompetenceOptions() {
+            const allSelects = document.querySelectorAll('select[name="competence_id"]');
+            const selectedValues = Array.from(allSelects).map(s => s.value);
+
+            allSelects.forEach(select => {
+                const currentValue = select.value;
+                Array.from(select.options).forEach(option => {
+                    if (option.value !== currentValue && selectedValues.includes(option.value)) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = '';
+                    }
+                });
+            });
+            
+            const addCompetBtn = document.getElementById('addCompetBtn');
+            if (selectedValues.length >= competencesCount) {
+                addCompetBtn.disabled = true;
+            } else {
+                addCompetBtn.disabled = false;
+            }
+
+            const addCompetBonusBtn = document.getElementById('addCompetBonusBtn');
+            if (selectedValues.length >= competencesCount) {
+                addCompetBonusBtn.disabled = true;
+            } else {
+                addCompetBonusBtn.disabled = false;
+            }
+        }
+
+        function refreshCompetenceSelects() {
+            updateCompetenceOptions();
+
+            document.querySelectorAll('select[name="competence_id"]').forEach(select => {
+                select.removeEventListener('change', updateCompetenceOptions); // Évite doublon
+                select.addEventListener('change', updateCompetenceOptions);
+            });
+        }
+
+        document.getElementById('addCompetBtn').addEventListener('click', () => {
+            const container = document.getElementById('compets-container');
+            const div = document.createElement('div');
+            div.classList = 'compet-group flex flex-col sm:flex-row sm:items-center gap-2';
+            div.innerHTML = `
+                <select name="competence_req_id" class="border p-2 rounded w-1/4">
+                    <option disabled selected value="">-- Choisir une compétence --</option>
+                    {% for c in competences %}
+                        <option value="{{ c.id }}">{{ c.nom }}</option>
+                    {% endfor %}
+                </select>
+                <select name="competence_req_niveau" class="border p-2 rounded w-1/4">
+                    {% for niveau in niveaux_competence %}
+                        <option value="{{ niveau.0 }}">{{ niveau.0 }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="compet_req_nb_personnes" min="1" placeholder="Nb personnes" class="border p-2 rounded w-1/4">
+                <button type="button" class="remove-compet text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+            `;
+            container.appendChild(div);
+ 
+            refreshCompetenceSelects();
+        });
+
+        document.getElementById('addCompetBonusBtn').addEventListener('click', () => {
+            const container = document.getElementById('competsbonus-container');
+            const div = document.createElement('div');
+            div.classList = 'compet-group flex flex-col sm:flex-row sm:items-center gap-2';
+            div.innerHTML = `
+                <select name="competence_bon_id" class="border p-2 rounded w-1/4">
+                    <option disabled selected value="">-- Choisir une compétence --</option>
+                    {% for c in competences %}
+                        <option value="{{ c.id }}">{{ c.nom }}</option>
+                    {% endfor %}
+                </select>
+                <select name="competence_bon_niveau" class="border p-2 rounded w-1/4">
+                    {% for niveau in niveaux_competence %}
+                        <option value="{{ niveau.0 }}">{{ niveau.0 }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="compet_bon_nb_personnes" min="1" placeholder="Nb personnes" class="border p-2 rounded w-1/4">
+                <button type="button" class="remove-competbonus text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+            `;
+            container.appendChild(div);
+ 
+            refreshCompetenceSelects();
+        });
+        
+        const joursDisponibles = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+
+        function updateHoraireOptions() {
+            const allSelects = document.querySelectorAll('select[name="jour"]');
+            const selectedValues = Array.from(allSelects).map(s => s.value);
+
+            allSelects.forEach(select => {
+                const currentValue = select.value;
+                Array.from(select.options).forEach(option => {
+                    if (option.value !== currentValue && selectedValues.includes(option.value)) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = '';
+                    }
+                });
+            });
+
+            const addHoraireBtn = document.getElementById('addHoraireBtn');
+            if (selectedValues.length >= joursDisponibles.length) {
+                addHoraireBtn.disabled = true;
+            } else {
+                addHoraireBtn.disabled = false;
+            }
+        }
+
+        function refreshHoraireSelects() {
+            updateHoraireOptions();
+
+            document.querySelectorAll('select[name="jour"]').forEach(select => {
+                select.removeEventListener('change', updateHoraireOptions);
+                select.addEventListener('change', updateHoraireOptions);
+            });
+        }
+
+        document.getElementById('addHoraireBtn').addEventListener('click', () => {
+            const container = document.getElementById('horaires-container');
+            const div = document.createElement('div');
+            div.classList = 'horaire-group flex flex-col sm:flex-row sm:items-center gap-2';
+            div.innerHTML = `
+                <select name="jour" class="border rounded px-3 py-2 w-full sm:w-auto">
+                    <option disabled selected value="">-- Choisir un jour --</option>
+                    <option value="Lundi">Lundi</option>
+                    <option value="Mardi">Mardi</option>
+                    <option value="Mercredi">Mercredi</option>
+                    <option value="Jeudi">Jeudi</option>
+                    <option value="Vendredi">Vendredi</option>
+                </select>
+                <input type="time" name="heure_debut" class="border rounded px-3 py-2 w-full sm:w-auto">
+                <input type="time" name="heure_fin" class="border rounded px-3 py-2 w-full sm:w-auto">
+                <button type="button" class="remove-horaire text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+            `;
+            container.appendChild(div);
+
+            refreshHoraireSelects();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            refreshCompetenceSelects();
+            refreshHoraireSelects();
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-compet')) {
+                e.target.parentElement.remove();
+                refreshCompetenceSelects();
+            }
+
+            if (e.target.classList.contains('remove-competbonus')) {
+                e.target.parentElement.remove();
+                refreshCompetenceSelects();
+            }
+
+            if (e.target.classList.contains('remove-horaire')) {
+                const div = e.target.parentElement;
+                const jourSupprime = div.querySelector('select[name="jour"]').value;
+                div.remove();
+
+                refreshHoraireSelects();
+            }
+        });
+
+        let totalExp = 0;
+
+        document.getElementById('addExperienceBtn').addEventListener('click', () => {
+            totalExp++;
+            const container = document.getElementById('experience-container');
+            const div = document.createElement('div');
+            div.classList = 'exp-group flex flex-col sm:flex-row sm:items-center gap-2';
+            div.innerHTML = `
+                <input type="number" name="annees_experience_${totalExp}" placeholder="Années d'expérience" class="border p-2 rounded w-1/3">
+                <input type="number" name="projets_realises_${totalExp}" placeholder="Projets réalisés" class="border p-2 rounded w-1/3">
+                <input type="number" name="nombre_personnes_exp_${totalExp}" placeholder="Nombre de personnes" class="border p-2 rounded w-1/3">
+                <button type="button" class="remove-exp text-red-600 font-bold px-3 py-1 hover:bg-red-100 rounded">✕</button>
+            `;
+            container.appendChild(div);
+
+            // Ajout d’un champ caché pour suivre le total
+            document.getElementById('total_experience').value = totalExp;
+        });
+
+        // Pour garder le total à jour
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-exp')) {
+                e.target.parentElement.remove();
+            }
+        });
+</script>
+
+
+{% endblock %}
