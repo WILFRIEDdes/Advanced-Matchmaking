@@ -1,1 +1,2 @@
-Coucou
+A matchmaking system designed to facilitate optimal pairing between users and projects by maximizing compatibility and satisfaction. Our idea is to develop an algorithm that considers users' skills, preferences, and availability, as well as the specific needs of each project.
+This system will not only help form well-balanced and high-performing teams, but also ensure an enriching experience for participants and greater efficiency for the projects.
