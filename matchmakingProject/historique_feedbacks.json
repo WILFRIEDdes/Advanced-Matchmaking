@@ -746,5 +746,93 @@
         },
         "resultat": 1,
         "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.16142494261083898,
+            "experience": 0.1903843938913394,
+            "notes": 0.10951481108908999
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.16142494261083898,
+            "experience": 0.1903843938913394,
+            "notes": 0.10951481108908999
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.13604985613439902,
+            "experience": 0.12528217516598414,
+            "notes": 0.11971650129530237
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.13604985613439902,
+            "experience": 0.12528217516598414,
+            "notes": 0.11971650129530237
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.12155807057540353,
+            "experience": 0.11922219601024851,
+            "notes": 0.07903978246566173
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.12155807057540353,
+            "experience": 0.11922219601024851,
+            "notes": 0.07903978246566173
+        },
+        "resultat": 1,
+        "poids": 1.2
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.10784166583107802,
+            "experience": 0.10985615590686432,
+            "notes": 0.07309384510784794
+        },
+        "resultat": 1,
+        "poids": 1.5
+    },
+    {
+        "projet_id": 1,
+        "coefficients": {
+            "competences_obligatoires": 2,
+            "competences_bonus": 0.10784166583107802,
+            "experience": 0.10985615590686432,
+            "notes": 0.07309384510784794
+        },
+        "resultat": 1,
+        "poids": 1.2
     }
 ]

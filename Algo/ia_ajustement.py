@@ -8,7 +8,7 @@ from datetime import datetime
 
 MODEL_FILE_TEMPLATE = "modele_{cible}.pkl"
 
-COEFFS_CIBLES = ["notes", "competences_obligatoires", "communication", "experience", "competences_bonus"]
+COEFFS_CIBLES = ["notes", "competences_obligatoires", "experience", "competences_bonus"]
 
 def ajuster_coefficients_par_question():
     feedbacks = charger_feedbacks()
@@ -31,7 +31,6 @@ def ajuster_coefficients_par_question():
                 coeffs.get("competences_bonus", 0),
                 coeffs.get("experience", 0),
                 coeffs.get("notes", 0),
-                coeffs.get("communication", 0),
             ])
             y.append(fb["resultat"])
             weights.append(fb["poids"])
@@ -53,7 +52,6 @@ def ajuster_coefficients_par_question():
             "competences_bonus": 1,
             "experience": 2,
             "notes": 3,
-            "communication": 4,
         }
 
         idx = index_map[cible]

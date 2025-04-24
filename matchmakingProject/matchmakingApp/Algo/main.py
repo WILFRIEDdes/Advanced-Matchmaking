@@ -79,6 +79,7 @@ def pipeline_ajustement_coefficients(feedbacks, projet_id):
     print("\n==== 🤖 Pipeline : Ajustement des coefficients ====\n")
 
     print("📊 Coefficients actuels :", obtenir_coefficients())
+    anciens_coeffs = obtenir_coefficients()
     nouveaux_coeffs = traiter_feedbacks_utilisateurs(projet_id, feedbacks)
 
     if nouveaux_coeffs:
@@ -88,7 +89,7 @@ def pipeline_ajustement_coefficients(feedbacks, projet_id):
         print("⚠️ Pas d’ajustement effectué (feedbacks insuffisants ou incohérents).")
         sauver_coefficients(obtenir_coefficients())
 
-    return nouveaux_coeffs or obtenir_coefficients()
+    return (nouveaux_coeffs,anciens_coeffs)
 
 
 if __name__ == "__main__":

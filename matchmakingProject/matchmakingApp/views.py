@@ -526,7 +526,7 @@ def demander_equipe(request):
             messages.success(request, f"Équipe générée avec succès : {[membre.id for membre in meilleure_equipe.membres]}")
         else:
             messages.error(request, "Impossible de générer une équipe. Vérifiez les données.")
-        return redirect("test")
+        return render(request, "test.html", {"equipe": meilleure_equipe})
 
 @login_required
 def ajuster_coefficients(request):
@@ -537,6 +537,6 @@ def ajuster_coefficients(request):
             {"utilisateur_id": 2, "reponses": {"q1": 3, "q2": 4, "q3": 4, "q4": 3, "q5": 4}, "poids": 1.2},
         ]
         projet_id = 1  # Exemple d'ID de projet
-        nouveaux_coeffs = pipeline_ajustement_coefficients(feedbacks, projet_id)
-        messages.success(request, f"Coefficients ajustés avec succès : {nouveaux_coeffs}")
-        return redirect("test")
+        coeffs = pipeline_ajustement_coefficients(feedbacks, projet_id)
+        messages.success(request, f"Coefficients ajustés avec succès : {coeffs}")
+        return render(request, "test.html", {"nouveaux_coeffs": coeffs[0], "anciens_coeffs": coeffs[1]})
