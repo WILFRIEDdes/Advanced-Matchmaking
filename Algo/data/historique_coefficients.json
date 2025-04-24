@@ -1,0 +1,164 @@
+[
+    {
+        "timestamp": "2025-04-24T12:51:28.085159",
+        "coefficients": {
+            "notes": 1.1017895571600869,
+            "competences_obligatoires": 1.3184140371994846,
+            "experience": 1.3155979282416144,
+            "competences_bonus": 1.3402246256450325
+        }
+    },
+    {
+        "timestamp": "2025-04-24T12:51:48.740660",
+        "coefficients": {
+            "notes": 1.285991251043185,
+            "competences_obligatoires": 1.214437394768903,
+            "experience": 1.1584668680806902,
+            "competences_bonus": 1.3834864854981883
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:29:06.532423",
+        "coefficients": {
+            "notes": 1.2728176392983004,
+            "competences_obligatoires": 1.2226085980021901,
+            "experience": 1.273316152712133,
+            "competences_bonus": 1.3932900274738282
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:29:06.542893",
+        "coefficients": {
+            "notes": 1.2728176392983004,
+            "competences_obligatoires": 1.2226085980021901,
+            "experience": 1.273316152712133,
+            "competences_bonus": 1.3932900274738282
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:30:41.362314",
+        "coefficients": {
+            "notes": 1.18989013437174,
+            "competences_obligatoires": 1.268002700902608,
+            "experience": 1.2602504662989542,
+            "competences_bonus": 1.4551243129585476
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:30:41.375054",
+        "coefficients": {
+            "notes": 1.18989013437174,
+            "competences_obligatoires": 1.268002700902608,
+            "experience": 1.2602504662989542,
+            "competences_bonus": 1.4551243129585476
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:34:49.508933",
+        "coefficients": {
+            "notes": 1.223488216067712,
+            "competences_obligatoires": 1.2378419860527128,
+            "experience": 1.2850258261250738,
+            "competences_bonus": 1.3242913998226402
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:34:49.516655",
+        "coefficients": {
+            "notes": 1.223488216067712,
+            "competences_obligatoires": 1.2378419860527128,
+            "experience": 1.2850258261250738,
+            "competences_bonus": 1.3242913998226402
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:36:13.073651",
+        "coefficients": {
+            "notes": 1.2464800437791566,
+            "competences_obligatoires": 1.2206370708391363,
+            "experience": 1.2871054545874734,
+            "competences_bonus": 1.305251411571362
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:36:13.080175",
+        "coefficients": {
+            "notes": 1.2464800437791566,
+            "competences_obligatoires": 1.2206370708391363,
+            "experience": 1.2871054545874734,
+            "competences_bonus": 1.305251411571362
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:36:31.532152",
+        "coefficients": {
+            "notes": 1.329590508975833,
+            "competences_obligatoires": 1.1541448688425766,
+            "experience": 1.2304293436770117,
+            "competences_bonus": 1.2627366191300369
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:36:31.540330",
+        "coefficients": {
+            "notes": 1.329590508975833,
+            "competences_obligatoires": 1.1541448688425766,
+            "experience": 1.2304293436770117,
+            "competences_bonus": 1.2627366191300369
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:38:52.400207",
+        "coefficients": {
+            "notes": 1.3447488622961568,
+            "competences_obligatoires": 1.1872345667987183,
+            "experience": 1.343181538624705,
+            "competences_bonus": 1.2820805110742253
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:38:52.408772",
+        "coefficients": {
+            "notes": 1.3447488622961568,
+            "competences_obligatoires": 1.1872345667987183,
+            "experience": 1.343181538624705,
+            "competences_bonus": 1.2820805110742253
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:44:37.678270",
+        "coefficients": {
+            "notes": 1.3005852551546515,
+            "competences_obligatoires": 1.1996358234183742,
+            "experience": 1.21252166049149,
+            "competences_bonus": 1.294558245785932
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:44:37.688323",
+        "coefficients": {
+            "notes": 1.3005852551546515,
+            "competences_obligatoires": 1.1996358234183742,
+            "experience": 1.21252166049149,
+            "competences_bonus": 1.294558245785932
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:47:13.989483",
+        "coefficients": {
+            "notes": 1.3569920055386038,
+            "competences_obligatoires": 1.247806550016561,
+            "experience": 1.2782207708832338,
+            "competences_bonus": 1.295100074834426
+        }
+    },
+    {
+        "timestamp": "2025-04-24T13:47:13.997673",
+        "coefficients": {
+            "notes": 1.3569920055386038,
+            "competences_obligatoires": 1.247806550016561,
+            "experience": 1.2782207708832338,
+            "competences_bonus": 1.295100074834426
+        }
+    }
+]

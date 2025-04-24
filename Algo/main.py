@@ -146,7 +146,13 @@ meilleure_equipe = algorithme_genetique(equipes_initiales[0], utilisateurs, proj
 print("-------------- Meilleure équipe optimisée --------------")
 print(f"Équipe : {[membre.id for membre in meilleure_equipe.membres]}, Budget total: {meilleure_equipe.budget_total} €, Score: {meilleure_equipe.score_global}")
 
+from validation_equipe import valider_equipe
 
+if not valider_equipe(meilleure_equipe):
+    print("❌ L'équipe ne respecte pas les critères du projet, on en cherche une autre.")
+    # Rechercher une autre équipe...
+else:
+    print("✅ L'équipe est valide pour ce projet.")
 
 
 # -------------- Simulation de feedbacks utilisateurs --------------
