@@ -7,11 +7,11 @@ def generer_feedbacks_test(n=100):
     for _ in range(n):
         utilisateur_id = random.randint(1, 100)
         reponses = {
-            "q1": 5.0,   # notes → très bonnes → IA devrait augmenter le coeff
-            "q2": 1.0,   # compétences obligatoires → très mauvaises → coeff devrait descendre
-            "q3": 2.5,   # communication (ignorée)
-            "q4": 5.0,   # expérience → très bonne → IA devrait augmenter
-            "q5": 1.0,   # bonus → très mauvais → IA devrait descendre
+            "q1": 5.0,   
+            "q2": 1.0,  
+            "q3": 2.5,   
+            "q4": 5.0, 
+            "q5": 1.0,   
         }
         poids = round(random.uniform(1.0, 2.0), 1)
 
