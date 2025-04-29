@@ -42,5 +42,3 @@ Thumbs.db
 #########################
 venv/
 env/
-
-mysql-init/

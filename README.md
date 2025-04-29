@@ -39,27 +39,46 @@ On Windows:
 
     venv\Scripts\activate
 
+### Start Docker and install dependencies
+Before configuring the database, make sure Docker is running, then execute the following commands to build and start the containers for the database :
+
+    docker build -t advanced-matchmaking .
+
+Then :
+
+    docker-compose up -d
+
 ### Install Dependencies
-Install the required project dependencies using the requirements.txt file. This will set up all the necessary libraries for the application to work.
+Install the required project dependencies using the requirements.txt file. This will set up all the necessary libraries for the application to work. Navigate to the matchmakingProject directory:
+
+    cd matchmakingProject
 
 Make sure you're still in the virtual environment, then run:
 
     pip install -r requirements.txt
 
-### Start Docker
-Before configuring the database, make sure Docker is running, then execute the following commands to build and start the containers for the database:
-
-    docker build -t advanced-matchmaking .
-    docker-compose up -d
-
 ### Configure the Database
-Now, configure the database by applying migrations to create the necessary tables. Navigate to the matchmakingProject directory:
+Now, to configure the database you have two options :
 
-    cd matchmakingProject
-
-Then run the following command:
+- Applying migrations to create the necessary tables. This will create an empty database with the necessary tables. To do so, run the following command:
 
     python manage.py migrate
+
+Then you'll have to create a superuser :
+
+    python manage.py createsuperuser
+
+You will now be able to access the admin page with this user and create your own users.
+
+- Import the matchmakingDB.sql dump from the mysql-init folder to try out the project with a default database:
+
+    docker exec -i mysql-container mysql -u root -pmonpassword matchmakingDB < ./mysql-init/matchmakingDB.sql
+
+In this case don't forget to use 
+
+    cd ..
+
+to return to the Advanced-Matchmaking directory before executing this command, then return to the matchmakingProject directory for the rest of the installation.
 
 ### Run the Application
 To test the application, start the server:
