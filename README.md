@@ -65,7 +65,7 @@ To test the application, start the server:
 
     python manage.py runserver
 
-The application will be available at: http://127.0.0.1:8000/matchmakingProject
+The application will be available at: http://127.0.0.1:8000/matchmakingApp
 
 ## How it works
 When deploying the application, the admin provides login credentials to a company owner (as a superuser). This owner accesses the Django admin panel to create user accounts for employees, assigning each a role: either employee or manager.
