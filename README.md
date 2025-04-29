@@ -58,27 +58,7 @@ Make sure you're still in the virtual environment, then run:
     pip install -r requirements.txt
 
 ### Configure the Database
-Now, to configure the database you have two options :
-
-- Applying migrations to create the necessary tables. This will create an empty database with the necessary tables. To do so, run the following command:
-
-    python manage.py migrate
-
-Then you'll have to create a superuser :
-
-    python manage.py createsuperuser
-
-You will now be able to access the admin page with this user and create your own users.
-
-- Import the matchmakingDB.sql dump from the mysql-init folder to try out the project with a default database:
-
-    docker exec -i mysql-container mysql -u root -pmonpassword matchmakingDB < ./mysql-init/matchmakingDB.sql
-
-In this case don't forget to use 
-
-    cd ..
-
-to return to the Advanced-Matchmaking directory before executing this command, then return to the matchmakingProject directory for the rest of the installation.
+You don't need to do anything to configure the database. It will be initialised with the default data when the docker-compose command is run.
 
 ### Run the Application
 To test the application, start the server:
