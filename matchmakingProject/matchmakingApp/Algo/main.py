@@ -5,8 +5,7 @@ from .score_utilisateur import *
 from .formation_equipes import *
 from .optimisation_meilleure_equipe import *
 from .coefficients import obtenir_coefficients
-from .feedback_manager import enregistrer_feedback
-from .ia_ajustement import ajuster_coefficients, sauver_coefficients
+from .ia_ajustement import sauver_coefficients
 from .collecte_feedbacks import traiter_feedbacks_utilisateurs
 import random
 

@@ -1,7 +1,6 @@
 from django.urls import path
 
 from . import views
-from .views import demander_equipe, ajuster_coefficients
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -17,10 +16,7 @@ urlpatterns = [
     path('list_projects/', views.list_projects, name='list_projects'),
     path('create_project/', views.create_project, name='create_project'),
     path('profile/', views.profile, name='profile'),
-    path('test/', views.test, name='test'),
     path('change_password/', views.change_password, name='change_password'),
-    path('demander-equipe/', demander_equipe, name='demander_equipe'),
-    path('ajuster-coefficients/', ajuster_coefficients, name='ajuster_coefficients'),
     path('survey/<int:projet_id>/', views.survey_view, name='survey'),
     path('redirect_to_survey/<int:projet_id>/', views.redirect_to_survey, name='redirect_to_survey'),
 ]
