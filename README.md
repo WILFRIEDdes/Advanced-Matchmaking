@@ -46,7 +46,7 @@ Make sure you're still in the virtual environment, then run:
 
     pip install -r requirements.txt
 
-## Start Docker
+### Start Docker
 Before configuring the database, make sure Docker is running, then execute the following commands to build and start the containers for the database:
 
     docker build -t advanced-matchmaking .
