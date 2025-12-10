@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'matchmakingDB',
         'USER': 'user',
         'PASSWORD': 'password',
-        'HOST': 'localhost',  # ou l'IP du conteneur MySQL
+        'HOST': 'db',  # ou l'IP du conteneur MySQL
         'PORT': '3306',
     }
 }
