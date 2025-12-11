@@ -42,3 +42,20 @@ Thumbs.db
 #########################
 venv/
 env/
+
+# terraform #
+#########################
+*.tfstate
+*.tfstate.backup
+.terraform/
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+tfplan

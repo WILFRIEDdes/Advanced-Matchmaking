@@ -94,10 +94,10 @@ WSGI_APPLICATION = 'matchmakingProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'matchmakingDB',
-        'USER': 'user',
-        'PASSWORD': 'password',
-        'HOST': 'db',  # ou l'IP du conteneur MySQL
+        'NAME': os.getenv('DATABASE_NAME', 'local_matchmakingDB'),
+        'USER': os.getenv('DATABASE_USER', 'root'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'local_password'),
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),  # ou l'IP du conteneur MySQL
         'PORT': '3306',
     }
 }
