@@ -1,92 +1,110 @@
-# TeamBuilding App
+# Advanced Matchmaking App - TeamBuilding
 
 ## Description
-TeamBuilding is a web application designed to help companies easily create project teams that match specified requirements. It includes a matchmaking system designed to facilitate optimal pairing between users and projects by maximizing compatibility and satisfaction. Our idea is to develop an algorithm that considers users' skills, preferences, and availability, as well as the specific needs of each project.
-This system will not only help form well-balanced and high-performing teams, but also ensure an enriching experience for participants and greater efficiency for the projects.
+TeamBuilding est une application web conçue pour aider les entreprises à former facilement des équipes de projet correspondant à des exigences spécifiées. Elle inclut un système de "matchmaking" conçu pour faciliter l'appariement optimal entre les utilisateurs et les projets en maximisant la compatibilité et la satisfaction. Notre idée est de développer un algorithme qui prend en compte les compétences, les préférences et la disponibilité des utilisateurs, ainsi que les besoins spécifiques de chaque projet. Ce système aidera non seulement à former des équipes équilibrées et performantes, mais assurera également une expérience enrichissante pour les participants et une plus grande efficacité pour les projets.
 
-## Prerequisites
-Before getting started, make sure the following are installed on your system:
-- Python 3.12
-- pip (Python's package manager)
-- virtualenv (to create an isolated virtual environment)
-- docker
+## Fonctionnalités
 
-## Dependencies
-The required dependencies will be installed by following the installation instructions. Among them is the Django web framework, which was used to develop this Python web application.
+### Fonctionnalités Manager
+* Voir tous les projets (en cours, passés, à venir).
+* Attribuer des équipes aux projets qui n'en ont pas encore.
+* Remplir une enquête de satisfaction pour les projets passés (à des fins de démonstration).
+* Créer de nouveaux projets.
+* Voir la liste des employés.
+* Modifier le profil personnel :
+    * Changer le mot de passe.
+    * Mettre à jour les compétences.
+    * Définir la mobilité (sur site ou à distance).
+    * Définir la disponibilité.
 
-## Installation
+### Fonctionnalités Employé
+* Voir uniquement les projets dans lesquels ils sont impliqués (en cours, passés, à venir).
+* Modifier le profil personnel (mêmes champs que les managers).
+* Remplir des enquêtes de satisfaction pour les projets terminés.
 
-### Clone the Project
-First, clone the project repository using the link https://github.com/WILFRIEDdes/Advanced-Matchmaking (or extract the provided zip archive containing the source code):
+---
 
-    git clone https://github.com/WILFRIEDdes/Advanced-Matchmaking.git
+## Architecture et Déploiement Azure (Production)
 
-Then navigate to the project directory:
+### Vue d'ensemble de l'Architecture
+L'application est déployée sur **Azure App Service pour Conteneurs (Linux)**, garantissant une connexion sécurisée à la base de données via un Réseau Virtuel (VNet) privé.
 
-    cd Advanced-Matchmaking
+* **IaC (Infrastructure as Code) :** L'infrastructure est gérée via **Terraform**.
+* **Conteneurisation :** L'application web Python/Django est conteneurisée (image `django-web:v1`) et stockée dans un **Azure Container Registry (ACR)**.
+* **Base de Données :** **Azure Database for MySQL Flexible Server** est déployé avec une connexion privée, garantissant que le trafic de la base de données ne quitte jamais le Réseau Virtuel.
+* **Réseau :** L'App Service est intégré au VNet pour accéder en privé à la base de données MySQL.
+* **Sécurité des Secrets :** Le mot de passe de l'administrateur de la base de données est stocké dans un **Azure Key Vault (KV)**. L'App Service utilise son identité gérée (System Assigned Identity) pour accéder au secret et à l'ACR (rôle `AcrPull`).
 
-### Create and Activate a Virtual Environment
-Create your virtual environment using the command:
 
-    python -m venv venv
+### Prérequis
 
-Then activate it:
-On Linux:
+Avant de commencer le déploiement, assurez-vous que les outils suivants sont installés et configurés :
 
-    source venv/bin/activate
+* **Docker**
+* **Azure CLI** (authentifié avec `az login`)
+* **Terraform**
 
-On Windows:
+---
 
-    venv\Scripts\activate
+## Procédure de Déploiement sur Azure
 
-### Start Docker and install dependencies
-Before configuring the database, make sure Docker is running, then execute the following commands to build and start the containers for the database :
+### 1. Déploiement de l'Infrastructure avec Terraform
 
-    docker build -t advanced-matchmaking .
+a. **Initialisation :** Naviguez vers le répertoire "terraform" et initialisez Terraform.
+```bash
+terraform init
+```
+b. **Planification et Application :** Exécutez le plan pour visualiser les ressources, puis appliquez la configuration.
+```bash
+terraform plan
+terraform apply
+```
+*(Vous devrez fournir les valeurs des variables, notamment `db_admin_password`).*
 
-Then :
+### 2. Préparation du Code et de l'Image
+    
+**Construction et Push de l'Image Docker :**
+Nous construisons l'image de l'application et la publions dans l'ACR.
 
-    docker-compose up -d
+a. **Construisez l'image :** (Assurez-vous d'être dans le répertoire racine du projet)
+Le login_serveur peut être obtenu avec la commande suivante :
+```bash
+$ACR_LOGIN_SERVER = (terraform output -raw acr_login_server).Trim()
+```
+Effectuez ensuite cette commande afin de build l'image docker :
+```bash
+docker build -t "$ACR_LOGIN_SERVER/django-web:v1" .
+```
 
-### Install Dependencies
-Install the required project dependencies using the requirements.txt file. This will set up all the necessary libraries for the application to work. Navigate to the matchmakingProject directory:
+b. **Authentifiez-vous auprès de l'ACR :**
+L'acr_name peut être obtenu avec la commande suivante :
+```bash
+$ACR_NAME = (terraform output -raw acr_name).Trim()
+```
+Puis effectuez cette commande :
+```bash
+az acr login --name $ACR_NAME
+```
 
-    cd matchmakingProject
+c. **Taguez et poussez l'image vers l'ACR :**
+```bash
+docker push $ACR_NAME.azurecr.io/django-web:v1
+```
 
-Make sure you're still in the virtual environment, then run:
+### 3. Accès à l'Application
 
-    pip install -r requirements.txt
+Une fois le déploiement réussi, l'application est accessible via l'URL de votre App Service. Vous trouverez cette URL dans l'App Service du portail Azure.
+Normalement il devrait s'agir de ce lien :
+https://advancedmatchmaking-app.azurewebsites.net/matchmakingApp/
 
-### Configure the Database
-You don't need to do anything to configure the database. It will be initialised with the default data when the docker-compose command is run.
+### Utilisateurs de Test (Post-Déploiement)
 
-### Run the Application
-To test the application, start the server:
+Après le déploiement et l'initialisation de la base de données par l'application, vous pouvez utiliser les comptes suivants pour tester les différentes vues et fonctionnalités de notre application:
 
-    python manage.py runserver
+| Rôle | Adresse Email | Mot de Passe |
+| :--- | :--- | :--- |
+| **Manager** | `doe.john@example.com` | `johnXD42!` |
+| **Employé** | `bon.jean@example.com` | `jeanXD42!` |
+| **Admin** | `messi.cristiano@example.com` | `admin` |
 
-The application will be available at: http://127.0.0.1:8000/matchmakingApp
-
-## How it works
-When deploying the application, the admin provides login credentials to a company owner (as a superuser). This owner accesses the Django admin panel to create user accounts for employees, assigning each a role: either employee or manager.
-
-Upon login, the platform detects the user's role and provides access to the corresponding features.
-
-## Features
-
-### Manager Features
-- View all projects (ongoing, past, upcoming)
-- Assign teams to projects that do not yet have one
-- Fill out a satisfaction survey for past projects (demo purpose)
-- Create new projects
-- View the list of employees
-- Edit personal profile:
-    - Change password
-    - Update skills
-    - Set mobility (on-site or remote)
-    - Define availability
-
-### Employee Features
-- View only the projects they are involved in (ongoing, past, upcoming)
-- Edit personal profile (same fields as managers)
-- Fill out satisfaction surveys for completed projects
+**Les fonctionnalités les plus intéressantes à tester sont celles du rôle Manager**, car elles impliquent la création de projets, la gestion des équipes et l'utilisation potentielle de l'algorithme de "matchmaking" central de l'application.

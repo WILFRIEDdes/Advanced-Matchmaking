@@ -16,8 +16,8 @@ RUN pip install --no-cache-dir -r matchmakingProject/requirements.txt
 # Exposer le port de Django
 EXPOSE 8000
 
-# Définir le script d'attente comme point d'entrée (ENTRYPOINT)
-ENTRYPOINT ["python", "/usr/local/bin/wait-for-db.py"]
+# # Définir le script d'attente comme point d'entrée (ENTRYPOINT)
+# ENTRYPOINT ["python", "/usr/local/bin/wait-for-db.py"]
 
-# Commande de lancement du serveur Django
-CMD ["python", "matchmakingProject/manage.py", "runserver", "0.0.0.0:8000"]
+# # Commande de lancement du serveur Django
+ENTRYPOINT ["python", "matchmakingProject/manage.py", "runserver", "0.0.0.0:8000"]

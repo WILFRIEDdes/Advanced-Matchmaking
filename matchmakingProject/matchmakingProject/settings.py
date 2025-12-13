@@ -27,7 +27,14 @@ SECRET_KEY = 'django-insecure-i_3gj$wv0o6=i6mil7xws%oi(xescz8ws48(v@a%q)_dxn_g37
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.azurewebsites.net',  # Pour autoriser advancedmatchmaking-app.azurewebsites.net
+    'http://*.azurewebsites.net',   # Si jamais vous utilisez http
+    'http://*',                     # Autorise n'importe quel domaine en HTTP
+    'https://*',                    # Autorise n'importe quel domaine en HTTPS
+    'http://127.0.0.1:8000',        # Pour le développement local si vous en faites
+]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

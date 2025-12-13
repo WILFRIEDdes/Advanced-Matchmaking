@@ -1,7 +1,7 @@
-output "web_app_url" {
-  description = "URL d'accès à l'application Django"
-  value = azurerm_container_app.web_app.ingress[0].fqdn
-}
+# output "web_app_url" {
+#   description = "URL d'accès à l'application Django"
+#   value = azurerm_container_app.web_app.ingress[0].fqdn
+# }
 
 output "acr_name" {
   description = "Nom de l'Azure Container Registry"

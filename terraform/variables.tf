@@ -5,12 +5,12 @@ variable "resource_group_name" {
 
 variable "location" {
   description = "Région Azure pour le déploiement"
-  default = "France Central"
+  default = "Switzerland North"
 }
 
 variable "acr_name" {
   description = "Nom de l'Azure Container Registry"
-  default = "matchmakingregistry"
+  default = "matchmakingregistrytest"
 }
 
 # Variables de la Base de Données (MySQL)

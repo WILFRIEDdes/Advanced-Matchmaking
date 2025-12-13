@@ -3,8 +3,9 @@ import socket
 import sys
 import time
 import subprocess
+import os
 
-HOST = "db"
+HOST = os.environ.get('DATABASE_HOST')
 PORT = 3306
 TIMEOUT = 30 # Temps maximum d'attente en secondes
 
