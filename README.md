@@ -66,40 +66,53 @@ terraform apply
 **Construction et Push de l'Image Docker :**
 Nous construisons l'image de l'application et la publions dans l'ACR.
 
-a. **Construisez l'image :** (Assurez-vous d'être dans le répertoire racine du projet)
-Le login_serveur peut être obtenu avec la commande suivante :
+Commencez par effectuer cette commande afin de récupérer les variables nécessaires pour l'ACR :
 ```bash
 $ACR_LOGIN_SERVER = (terraform output -raw acr_login_server).Trim()
 ```
-Effectuez ensuite cette commande afin de build l'image docker :
+
+**Authentifiez-vous auprès de l'ACR :**
+```bash
+az acr login --name $ACR_LOGIN_SERVER
+```
+
+**Construisez l'image :** (Assurez-vous d'être dans le répertoire racine du projet)
 ```bash
 docker build -t "$ACR_LOGIN_SERVER/django-web:v1" .
 ```
 
-b. **Authentifiez-vous auprès de l'ACR :**
-L'acr_name peut être obtenu avec la commande suivante :
+**Poussez l'image vers l'ACR :**
 ```bash
-$ACR_NAME = (terraform output -raw acr_name).Trim()
-```
-Puis effectuez cette commande :
-```bash
-az acr login --name $ACR_NAME
+docker push "$ACR_LOGIN_SERVER/django-web:v1"
 ```
 
-c. **Taguez et poussez l'image vers l'ACR :**
+**Déplacez vous dans le répertoire de l'initialisation de la base de données**
 ```bash
-docker push $ACR_NAME.azurecr.io/django-web:v1
+cd db-init
 ```
 
-### 3. Accès à l'Application
+**Construisez puis poussez l'image de la base de données :**
+```bash
+docker build -t "$ACR_LOGIN_SERVER/db-init:latest" .
+docker push "$ACR_LOGIN_SERVER/django-web:v1"
+```
 
-Une fois le déploiement réussi, l'application est accessible via l'URL de votre App Service. Vous trouverez cette URL dans l'App Service du portail Azure.
+### 3. Finir le déploiement de l'Infrastructure avec Terraform
+Dans le main.tf, décommentez toute la deuxième partie du fichier avant d'effectuer une seconde fois la commande suivante :
+```bash
+terraform apply
+```
+
+### 4. Accès à l'Application
+
+Une fois le déploiement réussi, l'application est accessible via l'URL de votre App Service. Vous trouverez cette URL sur le portail Azure.
 Normalement il devrait s'agir de ce lien :
 https://advancedmatchmaking-app.azurewebsites.net/matchmakingApp/
+Le lancement de l'application peut prendre quelques minutes.
 
 ### Utilisateurs de Test (Post-Déploiement)
 
-Après le déploiement et l'initialisation de la base de données par l'application, vous pouvez utiliser les comptes suivants pour tester les différentes vues et fonctionnalités de notre application:
+Après le déploiement et l'initialisation de la base de données par l'application, vous pouvez utiliser les comptes suivants pour tester les différentes vues et fonctionnalités de notre application (la base de donnée d'initialisation déployée sur le repository git est une BDD d'exemple afin de tester l'application) :
 
 | Rôle | Adresse Email | Mot de Passe |
 | :--- | :--- | :--- |

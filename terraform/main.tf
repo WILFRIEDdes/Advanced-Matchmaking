@@ -302,10 +302,10 @@ resource "azurerm_key_vault_access_policy" "webapp" {
   ]
 }
 
-# A commenter pour le premier terraform apply puis décommenter pour la suite
+#########################################################################################
+# La suite est à commenter pour le premier terraform apply puis décommenter pour la suite
 
-# trigger quand init.db change (ou son dockerfile) (pour pas destroy la db a chaque terraform apply)
-
+/*
 resource "azurerm_user_assigned_identity" "aci_db_init_identity" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -331,9 +331,9 @@ resource "null_resource" "build_and_push_db_init" {
     sql_hash  = filemd5("db-init/init.sql")
   }
 
-  provisioner "local-exec" {
-    command = "az acr build --registry ${azurerm_container_registry.acr.name} --image db-init:latest db-init/"
-  }
+  # provisioner "local-exec" {
+  #   command = "az acr build --registry ${azurerm_container_registry.acr.name} --image db-init:latest db-init/"
+  # }
 }
 
 # Crée un Azure Container Instance pour initialiser la base de données
@@ -388,3 +388,4 @@ resource "azurerm_container_group" "db_initializer" {
     azurerm_private_dns_zone_virtual_network_link.mysql_link
   ]
 }
+*/
